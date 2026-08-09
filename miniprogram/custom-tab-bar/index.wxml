@@ -7,17 +7,11 @@
     data-path="{{item.path}}"
     bindtap="onSwitchTab"
   >
-    <view class="tab-icon icon-{{item.icon}}">
-      <view wx:if="{{item.icon === 'home'}}" class="home-roof"></view>
-      <view wx:if="{{item.icon === 'home'}}" class="home-body"><view class="home-door"></view></view>
-      <view wx:if="{{item.icon === 'history'}}" class="history-face">
-        <view class="history-hand hour"></view>
-        <view class="history-hand minute"></view>
-      </view>
-      <view wx:if="{{item.icon === 'settings'}}" class="slider-line line-one"><view class="slider-knob"></view></view>
-      <view wx:if="{{item.icon === 'settings'}}" class="slider-line line-two"><view class="slider-knob"></view></view>
-      <view wx:if="{{item.icon === 'settings'}}" class="slider-line line-three"><view class="slider-knob"></view></view>
-    </view>
+    <image
+      class="tab-icon"
+      src="{{selected === index ? item.selectedIconPath : item.iconPath}}"
+      mode="aspectFit"
+    />
     <text class="tab-label">{{item.text}}</text>
   </view>
 </view>

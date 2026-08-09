@@ -1,0 +1,8 @@
+<view class="app-header" style="padding-top: {{statusBarHeight}}px;">
+  <view class="header-inner" style="height: {{navigationHeight}}px;">
+    <view class="brand" aria-label="小笺">
+      <image class="brand-icon" src="/assets/brand-note.svg" mode="aspectFit" />
+      <text>小笺</text>
+    </view>
+  </view>
+</view>

@@ -49,5 +49,9 @@ Page({
   onOpenDate(event) {
     getApp().globalData.selectedDate = event.currentTarget.dataset.date;
     wx.switchTab({ url: '/pages/today/today' });
+  },
+
+  onClosePanel() {
+    wx.switchTab({ url: '/pages/today/today' });
   }
 });

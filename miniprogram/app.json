@@ -5,11 +5,15 @@
     "pages/settings/settings"
   ],
   "window": {
+    "navigationStyle": "custom",
     "navigationBarTitleText": "小笺",
     "navigationBarBackgroundColor": "#f7f5f0",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f7f5f0",
     "backgroundTextStyle": "light"
+  },
+  "usingComponents": {
+    "app-header": "/components/app-header/index"
   },
   "tabBar": {
     "custom": true,

@@ -1,177 +1,145 @@
-.settings-page {
-  padding-top: 16rpx;
+.panel-page {
+  padding: 18px 20px calc(87px + env(safe-area-inset-bottom));
 }
 
-.eyebrow {
-  color: #3c765d;
-  font-size: 23rpx;
-  font-weight: 650;
-  letter-spacing: 0.15em;
-}
-
-.page-title {
-  margin-top: 10rpx;
-  font-family: Georgia, "Songti SC", serif;
-  font-size: 58rpx;
-  font-weight: 650;
-}
-
-.page-copy {
-  max-width: 590rpx;
-  margin-top: 12rpx;
-  color: #858983;
-  font-size: 24rpx;
-  line-height: 1.65;
-}
-
-.status-card {
+.data-actions {
   display: flex;
-  align-items: baseline;
-  margin-top: 24rpx;
-  padding: 24rpx;
+  flex-wrap: wrap;
+  margin: -4.5px;
 }
 
-.status-number {
-  color: #3c765d;
-  font-family: Georgia, serif;
-  font-size: 42rpx;
-  font-weight: 700;
-}
-
-.status-label {
-  margin-left: 8rpx;
-  color: #838781;
-  font-size: 23rpx;
-}
-
-.status-divider {
-  width: 1rpx;
-  height: 42rpx;
-  margin: 0 32rpx;
-  background: #ded9d0;
-}
-
-.settings-group {
-  overflow: hidden;
-}
-
-.setting-row {
+.data-action {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   box-sizing: border-box;
-  width: 100%;
-  min-height: 102rpx;
-  margin: 0;
-  padding: 20rpx 24rpx;
-  background: transparent;
+  width: calc(50% - 9px);
+  min-height: 57px;
+  margin: 4.5px;
+  padding: 9px 10px;
+  background: #fffefa;
+  border: 1px solid #e6e2d8;
+  border-radius: 12px;
   text-align: left;
-  line-height: 1.4;
 }
 
-.row-title {
-  color: #333733;
-  font-size: 27rpx;
+.data-action.wide {
+  width: calc(100% - 9px);
+  min-height: 49px;
+}
+
+.action-icon {
+  flex: 0 0 23px;
+  width: 23px;
+  height: 23px;
+  margin-right: 9px;
+}
+
+.action-copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.action-title,
+.action-subtitle {
+  display: block;
+}
+
+.action-title {
+  color: #2d302d;
+  font-size: 11px;
   font-weight: 600;
 }
 
-.row-copy {
-  max-width: 560rpx;
-  margin-top: 6rpx;
-  color: #92948f;
-  font-size: 22rpx;
-  line-height: 1.5;
+.action-subtitle {
+  margin-top: 2px;
+  color: #898b84;
+  font-size: 9px;
+  line-height: 1.4;
 }
 
-.row-arrow {
-  margin-left: 18rpx;
-  color: #9a9c97;
-  font-size: 42rpx;
-}
-
-.row-divider {
-  height: 1rpx;
-  margin-left: 28rpx;
-  background: #e6e1d8;
-}
-
-.sync-card {
+.data-note {
   display: flex;
-  align-items: flex-start;
-  padding: 24rpx;
+  margin-top: 16px;
+  padding: 13px;
+  background: #edece6;
+  border-radius: 13px;
 }
 
-.sync-card > view:last-child {
+.data-note.is-syncing {
+  background: #f2e7dc;
+}
+
+.note-icon {
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  margin-right: 11px;
+}
+
+.note-copy {
+  flex: 1;
   min-width: 0;
 }
 
-.sync-card.is-busy {
-  border-color: #d9c4ae;
+.note-title-row {
+  display: flex;
+  align-items: center;
+}
+
+.note-title {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.note-text {
+  display: block;
+  margin-top: 3px;
+  color: #898b84;
+  font-size: 10px;
+  line-height: 1.55;
 }
 
 .sync-dot {
-  flex: none;
-  width: 18rpx;
-  height: 18rpx;
-  margin: 10rpx 20rpx 0 0;
+  width: 7px;
+  height: 7px;
+  margin-left: 7px;
   background: #d59668;
   border-radius: 50%;
-  box-shadow: 0 0 0 8rpx #f6e9df;
 }
 
 .sync-dot.synced {
   background: #3c765d;
-  box-shadow: 0 0 0 8rpx #e2efe8;
-}
-
-.sync-dot.syncing {
-  background: #d59668;
-  animation: sync-pulse 1.4s ease-in-out infinite;
 }
 
 .sync-dot.error {
   background: #b45d4c;
-  box-shadow: 0 0 0 8rpx #f5e2de;
 }
 
 .sync-dot.muted {
   background: #999c96;
-  box-shadow: 0 0 0 8rpx #ecebe7;
 }
 
-.sync-privacy {
-  margin-top: 10rpx;
-  color: #a0a29d;
-  font-size: 20rpx;
-  line-height: 1.5;
+.sync-dot.syncing {
+  animation: sync-pulse 1.4s ease-in-out infinite;
 }
 
-@keyframes sync-pulse {
-  0%, 100% {
-    opacity: 0.45;
-  }
-  50% {
-    opacity: 1;
-  }
+.danger-action {
+  margin-top: 16px;
 }
 
-.danger .row-title {
+.danger-action .action-title {
   color: #aa5749;
 }
 
 .version {
-  padding: 36rpx 0 12rpx;
-  color: #a2a49f;
-  font-size: 22rpx;
+  margin-top: 24px;
+  color: #b1afa7;
+  font-size: 10px;
   text-align: center;
 }
 
-@media (max-width: 350px) {
-  .page-title {
-    font-size: 54rpx;
-  }
-
-  .status-divider {
-    margin: 0 24rpx;
-  }
+@keyframes sync-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }

@@ -1,65 +1,57 @@
-<view class="page-shell settings-page">
-  <view class="settings-header">
-    <view class="eyebrow">本地优先 · 自动同步</view>
-    <view class="page-title">设置</view>
-    <view class="page-copy">待办先保存在本机，再按当前微信用户自动同步；断网时也能正常使用。</view>
-  </view>
-
-  <view class="status-card surface">
-    <view class="status-number">{{taskCount}}</view>
-    <view class="status-label">条待办</view>
-    <view class="status-divider"></view>
-    <view class="status-number">{{dayCount}}</view>
-    <view class="status-label">个日期</view>
-  </view>
-
-  <view class="section-title">备份与多设备</view>
-  <view class="settings-group surface">
-    <button class="setting-row" bindtap="onExportBackup">
-      <view>
-        <view class="row-title">导出备份</view>
-        <view class="row-copy">生成与桌面版、网页版兼容的 JSON</view>
-      </view>
-      <text class="row-arrow">›</text>
-    </button>
-    <view class="row-divider"></view>
-    <button class="setting-row" bindtap="onImportFile">
-      <view>
-        <view class="row-title">从微信文件导入</view>
-        <view class="row-copy">选择聊天中保存的 JSON 并安全合并</view>
-      </view>
-      <text class="row-arrow">›</text>
-    </button>
-    <view class="row-divider"></view>
-    <button class="setting-row" bindtap="onImportClipboard">
-      <view>
-        <view class="row-title">从剪贴板导入</view>
-        <view class="row-copy">适合无法直接选择文件的设备</view>
-      </view>
-      <text class="row-arrow">›</text>
-    </button>
-  </view>
-
-  <view class="section-title">微信自动同步</view>
-  <view class="sync-card surface {{isSyncing ? 'is-busy' : ''}}">
-    <view class="sync-dot {{syncTone}}"></view>
+<app-header />
+<view class="page-shell panel-page settings-page">
+  <view class="panel-heading">
     <view>
-      <view class="row-title">{{syncTitle}}</view>
-      <view class="row-copy">{{syncCopy}}</view>
-      <view class="sync-privacy">不读取微信号、昵称或手机号，仅用小程序用户标识隔离数据。</view>
+      <view class="eyebrow">简单一点</view>
+      <view class="page-title">设置</view>
+    </view>
+    <button class="round-button" bindtap="onClosePanel" aria-label="关闭设置">
+      <image src="/assets/close.svg" mode="aspectFit" />
+    </button>
+  </view>
+
+  <view class="data-actions">
+    <button class="data-action" bindtap="onExportBackup">
+      <image class="action-icon" src="/assets/export.svg" mode="aspectFit" />
+      <view class="action-copy">
+        <text class="action-title">导出备份</text>
+        <text class="action-subtitle">保存为 JSON 文件</text>
+      </view>
+    </button>
+    <button class="data-action" bindtap="onImportFile">
+      <image class="action-icon" src="/assets/import.svg" mode="aspectFit" />
+      <view class="action-copy">
+        <text class="action-title">导入并合并</text>
+        <text class="action-subtitle">保留两边最新记录</text>
+      </view>
+    </button>
+    <button class="data-action wide" bindtap="onImportClipboard">
+      <image class="action-icon" src="/assets/clipboard.svg" mode="aspectFit" />
+      <view class="action-copy">
+        <text class="action-title">从剪贴板导入</text>
+        <text class="action-subtitle">适合无法直接选择文件的设备</text>
+      </view>
+    </button>
+  </view>
+
+  <view class="data-note {{isSyncing ? 'is-syncing' : ''}}">
+    <image class="note-icon" src="/assets/shield.svg" mode="aspectFit" />
+    <view class="note-copy">
+      <view class="note-title-row">
+        <text class="note-title">{{syncTitle}}</text>
+        <view class="sync-dot {{syncTone}}"></view>
+      </view>
+      <text class="note-text">{{syncCopy}} 不读取微信号、昵称或手机号。</text>
     </view>
   </view>
 
-  <view class="section-title">数据管理</view>
-  <view class="settings-group surface">
-    <button class="setting-row danger" bindtap="onClearData">
-      <view>
-        <view class="row-title">{{clearDataTitle}}</view>
-        <view class="row-copy">{{clearDataCopy}}</view>
-      </view>
-      <text class="row-arrow">›</text>
-    </button>
-  </view>
+  <button class="data-action wide danger-action" bindtap="onClearData">
+    <image class="action-icon" src="/assets/clear.svg" mode="aspectFit" />
+    <view class="action-copy">
+      <text class="action-title">{{clearDataTitle}}</text>
+      <text class="action-subtitle">{{clearDataCopy}}</text>
+    </view>
+  </button>
 
-  <view class="version">小笺微信小程序 · v{{appVersion}}</view>
+  <view class="version">小笺 {{appVersion}}</view>
 </view>

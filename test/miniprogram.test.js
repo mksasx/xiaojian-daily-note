@@ -179,10 +179,28 @@ test('Mini Program task controls keep fixed sizes and the settings page has no m
   const customTabMarkup = fs.readFileSync(path.join(miniRoot, 'custom-tab-bar', 'index.wxml'), 'utf8');
   const customTabScript = fs.readFileSync(path.join(miniRoot, 'custom-tab-bar', 'index.js'), 'utf8');
 
-  assert.match(todayStyles, /\.task-check\s*\{[\s\S]*flex:\s*0 0 40rpx/);
-  assert.match(todayStyles, /\.task-delete\s*\{[\s\S]*flex:\s*0 0 52rpx/);
+  assert.match(todayStyles, /\.task-check\s*\{[\s\S]*flex:\s*0 0 23px/);
+  assert.match(todayStyles, /\.task-delete\s*\{[\s\S]*flex:\s*0 0 34px/);
   assert.doesNotMatch(settingsMarkup, /<switch|立即同步/);
-  assert.match(settingsMarkup, /微信自动同步/);
+  assert.match(settingsMarkup, /class="data-note[\s\S]*\{\{syncTitle\}\}/);
   assert.match(customTabMarkup, /bindtap="onSwitchTab"/);
   assert.match(customTabScript, /onSwitchTab\s*\(/);
+});
+
+test('Mini Program reuses the web visual structure while reserving the WeChat system capsule', () => {
+  const appConfig = JSON.parse(fs.readFileSync(path.join(miniRoot, 'app.json'), 'utf8'));
+  const appStyles = fs.readFileSync(path.join(miniRoot, 'app.wxss'), 'utf8');
+  const todayMarkup = fs.readFileSync(path.join(miniRoot, 'pages', 'today', 'today.wxml'), 'utf8');
+  const historyMarkup = fs.readFileSync(path.join(miniRoot, 'pages', 'history', 'history.wxml'), 'utf8');
+  const settingsMarkup = fs.readFileSync(path.join(miniRoot, 'pages', 'settings', 'settings.wxml'), 'utf8');
+  const tabMarkup = fs.readFileSync(path.join(miniRoot, 'custom-tab-bar', 'index.wxml'), 'utf8');
+
+  assert.equal(appConfig.window.navigationStyle, 'custom');
+  assert.equal(appConfig.usingComponents['app-header'], '/components/app-header/index');
+  assert.match(appStyles, /#f7f5ef/);
+  assert.match(todayMarkup, /<app-header\s*\/>[\s\S]*class="date-row"[\s\S]*class="task-content"/);
+  assert.match(todayMarkup, /assets\/empty-note\.svg/);
+  assert.match(historyMarkup, /class="history-summary"[\s\S]*class="history-day"/);
+  assert.match(settingsMarkup, /class="data-actions"[\s\S]*class="data-note/);
+  assert.match(tabMarkup, /selectedIconPath/);
 });

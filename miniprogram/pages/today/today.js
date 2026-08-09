@@ -19,6 +19,7 @@ Page({
     total: 0,
     completed: 0,
     percent: 0,
+    isToday: true,
     carryCount: 0,
     showCompleted: false,
     isEmpty: true,
@@ -69,6 +70,7 @@ Page({
       total: progress.total,
       completed: progress.completed,
       percent: progress.percent,
+      isToday: this.selectedDate === localDateKey(),
       carryCount: this.priorIncompleteTasks().length,
       isEmpty: progress.total === 0
     });
