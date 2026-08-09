@@ -2,6 +2,8 @@
 
 一个轻量的 Windows / macOS 桌面每日待办便签。它把注意力放在“今天要做什么”和“过去完成了什么”上，不引入项目、标签或团队协作等复杂概念。
 
+在线版：[mksasx.github.io/xiaojian-daily-note](https://mksasx.github.io/xiaojian-daily-note/)
+
 ## 功能
 
 - 每日独立待办，点击切换完成状态
@@ -47,10 +49,8 @@ npm run dist
 
 Windows 安装包需在 Windows 上构建，macOS DMG 需在 macOS 上构建。应用数据存放在 Electron 的 `userData` 目录中。
 
-## 后续同步设计
+## 数据与同步
 
-当前数据访问统一经由 preload API 调用主进程，未来可在不改动界面交互的情况下，把本地存储替换为“本地优先 + 远端增量同步”。建议服务端为任务记录增加 `accountId`、`updatedAt`、`deletedAt` 与版本号，并以任务 ID 做冲突合并。
+当前版本不需要账号，也不会把便签上传到服务器。桌面版与网页版的数据都只保存在当前设备上；多设备之间通过 JSON 备份的“导出 / 导入并合并”传递数据。
 
-GitHub、同步盘、Supabase 与 Firebase 的具体取舍见 [SYNC_OPTIONS.md](SYNC_OPTIONS.md)。
-
-不联网的多设备操作步骤见 [MANUAL_SYNC.md](MANUAL_SYNC.md)。
+具体步骤见 [手动多设备同步](MANUAL_SYNC.md)。以后如增加账号同步，仍会保留本地优先和手动备份能力。
