@@ -1,0 +1,107 @@
+page {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 95% 10%, rgba(212, 135, 84, 0.07), transparent 25%),
+    #f7f5ef;
+  color: #2d302d;
+  font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+}
+
+button,
+input {
+  box-sizing: border-box;
+  font: inherit;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  line-height: normal;
+}
+
+button::after {
+  border: 0;
+}
+
+.page-shell {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 460px;
+  min-height: calc(100vh - 48px - env(safe-area-inset-top));
+  margin: 0 auto;
+  padding-bottom: calc(76px + env(safe-area-inset-bottom));
+}
+
+.surface {
+  background: #fffefa;
+  border: 1px solid #e6e2d8;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px rgba(62, 58, 48, 0.05);
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: #3c765d;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+}
+
+.page-title {
+  margin: 0;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.empty-panel {
+  padding: 50px 0;
+  color: #898b84;
+  text-align: center;
+}
+
+.empty-art {
+  width: 88px;
+  height: 72px;
+  margin: 0 auto;
+}
+
+.empty-title {
+  margin-top: 16px;
+  color: #595b57;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.empty-copy {
+  margin-top: 7px;
+  color: #898b84;
+  font-size: 13px;
+}
+
+@media (max-height: 570px) {
+  .page-title {
+    font-size: 25px;
+  }
+}
+
+@media (min-width: 768px) {
+  .page-shell {
+    max-width: 720px;
+  }
+}

@@ -1,0 +1,144 @@
+.panel-page {
+  padding: 18px 20px calc(87px + env(safe-area-inset-bottom));
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0 12px;
+  background: #fffefa;
+  border: 1px solid #e6e2d8;
+  border-radius: 12px;
+}
+
+.search-icon {
+  flex: 0 0 21px;
+  width: 21px;
+  height: 21px;
+  margin-right: 8px;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  color: #2d302d;
+  font-size: 17px;
+}
+
+.search-placeholder {
+  color: #aaa99f;
+}
+
+.history-summary {
+  display: flex;
+  margin: 13px 0 18px;
+}
+
+.summary-card {
+  flex: 1;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 12px 13px;
+  background: #e2eee7;
+  border-radius: 12px;
+}
+
+.summary-card + .summary-card {
+  margin-left: 10px;
+  background: #f0e5da;
+}
+
+.summary-number,
+.summary-label {
+  display: block;
+}
+
+.summary-number {
+  color: #3c765d;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.summary-card + .summary-card .summary-number {
+  color: #9a6745;
+}
+
+.summary-label {
+  margin-top: 2px;
+  color: #6f736d;
+  font-size: 11px;
+}
+
+.history-day {
+  margin-bottom: 18px;
+}
+
+.history-date {
+  display: flex !important;
+  align-items: baseline;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  background: transparent;
+  border-bottom: 1px solid #e6e2d8;
+  text-align: left;
+  padding: 0 0 7px !important;
+}
+
+.history-date-title {
+  flex: 1;
+  min-width: 0;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 17px;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.history-progress {
+  flex: none;
+  margin-left: 10px;
+  color: #898b84;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.history-task {
+  display: flex;
+  align-items: flex-start;
+  padding: 7px 0;
+  color: #666862;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.history-task.is-done {
+  color: #9c9b94;
+  text-decoration: line-through;
+}
+
+.history-dot {
+  flex: 0 0 6px;
+  box-sizing: border-box;
+  width: 6px;
+  height: 6px;
+  margin: 6px 8px 0 0;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+}
+
+.history-dot.is-complete {
+  background: #3c765d;
+  border-color: #3c765d;
+}
+
+.history-empty {
+  font-size: 12px;
+}

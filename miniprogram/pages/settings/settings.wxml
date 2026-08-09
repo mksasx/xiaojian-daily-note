@@ -1,0 +1,54 @@
+<app-header />
+<view class="page-shell panel-page settings-page">
+  <view class="panel-heading">
+    <view>
+      <view class="eyebrow">简单一点</view>
+      <view class="page-title">设置</view>
+    </view>
+  </view>
+
+  <view class="data-actions">
+    <button class="data-action" bindtap="onExportBackup">
+      <image class="action-icon" src="/assets/export.svg" mode="aspectFit" />
+      <view class="action-copy">
+        <text class="action-title">导出备份</text>
+        <text class="action-subtitle">保存为 JSON 文件</text>
+      </view>
+    </button>
+    <button class="data-action" bindtap="onImportFile">
+      <image class="action-icon" src="/assets/import.svg" mode="aspectFit" />
+      <view class="action-copy">
+        <text class="action-title">导入并合并</text>
+        <text class="action-subtitle">保留两边最新记录</text>
+      </view>
+    </button>
+    <button class="data-action wide" bindtap="onImportClipboard">
+      <image class="action-icon" src="/assets/clipboard.svg" mode="aspectFit" />
+      <view class="action-copy">
+        <text class="action-title">从剪贴板导入</text>
+        <text class="action-subtitle">适合无法直接选择文件的设备</text>
+      </view>
+    </button>
+  </view>
+
+  <view class="data-note {{isSyncing ? 'is-syncing' : ''}}">
+    <image class="note-icon" src="/assets/shield.svg" mode="aspectFit" />
+    <view class="note-copy">
+      <view class="note-title-row">
+        <text class="note-title">{{syncTitle}}</text>
+        <view class="sync-dot {{syncTone}}"></view>
+      </view>
+      <text class="note-text">{{syncCopy}}</text>
+    </view>
+  </view>
+
+  <button class="data-action wide danger-action" bindtap="onClearData">
+    <image class="action-icon" src="/assets/clear.svg" mode="aspectFit" />
+    <view class="action-copy">
+      <text class="action-title">{{clearDataTitle}}</text>
+      <text class="action-subtitle">{{clearDataCopy}}</text>
+    </view>
+  </button>
+
+  <view class="version">小笺 {{appVersion}}</view>
+</view>

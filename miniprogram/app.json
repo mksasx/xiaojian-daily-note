@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/today/today",
+    "pages/history/history",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "navigationStyle": "custom",
+    "navigationBarTitleText": "小笺",
+    "navigationBarBackgroundColor": "#f7f5f0",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f5f0",
+    "backgroundTextStyle": "light"
+  },
+  "usingComponents": {
+    "app-header": "/components/app-header/index"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8a8d86",
+    "selectedColor": "#3c765d",
+    "backgroundColor": "#fbfaf6",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/today/today",
+        "text": "今日"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "历史"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置"
+      }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

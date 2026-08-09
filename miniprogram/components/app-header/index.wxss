@@ -1,0 +1,39 @@
+.app-header {
+  position: sticky;
+  z-index: 50;
+  top: 0;
+  box-sizing: border-box;
+  width: 100%;
+  background: rgba(247, 245, 239, 0.97);
+}
+
+.header-inner {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  padding: 0 17px;
+  align-items: center;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  color: #2d302d;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.brand-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+@media (min-width: 768px) {
+  .header-inner {
+    max-width: 720px;
+  }
+}

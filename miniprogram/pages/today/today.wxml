@@ -1,0 +1,97 @@
+<app-header />
+<view class="page-shell today-page">
+  <view class="date-row">
+    <view class="date-heading">
+      <view class="eyebrow">{{weekday}}</view>
+      <picker mode="date" value="{{dateKey}}" bindchange="onDateChange">
+        <view class="date-title-row">
+          <text class="date-title">{{dateTitle}}</text>
+          <view class="date-picker-trigger" aria-label="选择日期">
+            <image src="/assets/chevron-down.svg" mode="aspectFit" />
+          </view>
+        </view>
+      </picker>
+    </view>
+    <view class="progress-ring" style="background: conic-gradient(#3c765d {{percent * 3.6}}deg, #e3e0d7 0);" aria-label="今日进度">
+      <view class="progress-center"><text>{{percent}}%</text></view>
+    </view>
+  </view>
+
+  <view class="date-nav">
+    <button class="nav-arrow" bindtap="onPreviousDay" aria-label="前一天">
+      <text class="arrow-symbol">‹</text>
+    </button>
+    <button class="today-pill {{isToday ? 'is-today' : ''}}" bindtap="onJumpToday">今天</button>
+    <button class="nav-arrow" bindtap="onNextDay" aria-label="后一天">
+      <text class="arrow-symbol">›</text>
+    </button>
+  </view>
+
+  <form class="task-composer" bindsubmit="onAddTask">
+    <view class="task-composer-row">
+      <text class="composer-plus">+</text>
+      <input
+        class="task-input"
+        name="text"
+        value="{{inputValue}}"
+        maxlength="120"
+        placeholder="写下今天想完成的事…"
+        placeholder-class="input-placeholder"
+        confirm-type="done"
+        bindinput="onInput"
+        bindconfirm="onAddTask"
+      />
+      <button wx:if="{{inputValue}}" class="add-button" form-type="submit">添加</button>
+    </view>
+  </form>
+
+  <button wx:if="{{carryCount > 0}}" class="carry-banner" bindtap="onCarryTasks">
+    <text class="carry-copy"><text class="carry-count">{{carryCount}}</text> 项昨日待办还未完成</text>
+    <text class="carry-action">移到今天 ›</text>
+  </button>
+
+  <view class="task-content">
+    <view wx:if="{{isEmpty}}" class="empty-state">
+      <image class="empty-art" src="/assets/empty-note.svg" mode="aspectFit" />
+      <view class="empty-title">今天，从一件小事开始</view>
+      <view class="empty-copy">写下来，然后轻轻划掉它。</view>
+    </view>
+
+    <view wx:if="{{activeTasks.length}}" class="task-list">
+      <view wx:for="{{activeTasks}}" wx:key="id" class="task-item">
+        <button class="task-check" data-id="{{item.id}}" bindtap="onToggleTask" aria-label="标记完成"></button>
+        <text class="task-text" data-id="{{item.id}}" bindtap="onOpenEdit">{{item.text}}</text>
+        <button class="task-delete" data-id="{{item.id}}" bindtap="onDeleteTask" aria-label="删除">
+          <text class="delete-symbol">×</text>
+        </button>
+      </view>
+    </view>
+
+    <view wx:if="{{completedTasks.length}}" class="completed-block">
+      <button class="completed-heading" bindtap="onToggleCompleted">
+        <text>已完成 · {{completedTasks.length}}</text>
+        <text class="completed-arrow">{{showCompleted ? '⌃' : '⌄'}}</text>
+      </button>
+      <view wx:if="{{showCompleted}}" class="task-list completed-list">
+        <view wx:for="{{completedTasks}}" wx:key="id" class="task-item is-done">
+          <button class="task-check is-checked" data-id="{{item.id}}" bindtap="onToggleTask">✓</button>
+          <text class="task-text" data-id="{{item.id}}" bindtap="onOpenEdit">{{item.text}}</text>
+          <button class="task-delete" data-id="{{item.id}}" bindtap="onDeleteTask">
+            <text class="delete-symbol">×</text>
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showEditDialog}}" class="dialog-mask" catchtouchmove="noop">
+    <view class="edit-dialog surface">
+      <view class="dialog-title">编辑待办</view>
+      <input class="edit-input" value="{{editValue}}" maxlength="120" focus bindinput="onEditInput" />
+      <view class="dialog-actions">
+        <button class="dialog-button secondary" bindtap="onCancelEdit">取消</button>
+        <button class="dialog-button primary" bindtap="onSaveEdit">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

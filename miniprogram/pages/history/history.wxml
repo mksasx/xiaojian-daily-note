@@ -1,0 +1,51 @@
+<app-header />
+<view class="page-shell panel-page history-page">
+  <view class="panel-heading">
+    <view>
+      <view class="eyebrow">过往足迹</view>
+      <view class="page-title">历史</view>
+    </view>
+  </view>
+
+  <view class="search-box">
+    <image class="search-icon" src="/assets/search.svg" mode="aspectFit" />
+    <input
+      class="search-input"
+      value="{{query}}"
+      placeholder="搜索做过的事"
+      placeholder-class="search-placeholder"
+      bindinput="onSearchInput"
+    />
+  </view>
+
+  <view class="history-summary">
+    <view class="summary-card">
+      <text class="summary-number">{{completedCount}}</text>
+      <text class="summary-label">累计完成</text>
+    </view>
+    <view class="summary-card">
+      <text class="summary-number">{{dayCount}}</text>
+      <text class="summary-label">记录天数</text>
+    </view>
+  </view>
+
+  <view wx:if="{{groups.length}}" class="history-list">
+    <view wx:for="{{groups}}" wx:key="dateKey" class="history-day">
+      <button class="history-date" data-date="{{item.dateKey}}" bindtap="onOpenDate">
+        <text class="history-date-title">{{item.title}}</text>
+        <text class="history-progress">{{item.progressText}}</text>
+      </button>
+      <view class="history-tasks">
+        <view wx:for="{{item.tasks}}" wx:for-item="task" wx:key="id" class="history-task {{task.completed ? 'is-done' : ''}}">
+          <view class="history-dot {{task.completed ? 'is-complete' : ''}}"></view>
+          <text>{{task.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-panel history-empty">
+    <view class="empty-title">还没有历史记录</view>
+    <view class="empty-copy">{{emptyCopy}}</view>
+  </view>
+</view>
