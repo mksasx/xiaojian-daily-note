@@ -24,6 +24,7 @@
   "build": {
     "appId": "com.dailynote.desktop",
     "productName": "小笺",
+    "icon": "src/icons/icon-512.png",
     "files": [
       "main.js",
       "preload.js",
