@@ -84,10 +84,6 @@ Page({
     if (this.unsubscribeSyncState) this.unsubscribeSyncState();
   },
 
-  onClosePanel() {
-    wx.switchTab({ url: '/pages/today/today' });
-  },
-
   applySyncState(state) {
     const presentation = syncPresentation(state);
     this.setData({

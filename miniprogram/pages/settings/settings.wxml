@@ -5,9 +5,6 @@
       <view class="eyebrow">简单一点</view>
       <view class="page-title">设置</view>
     </view>
-    <button class="round-button" bindtap="onClosePanel" aria-label="关闭设置">
-      <text class="close-symbol">×</text>
-    </button>
   </view>
 
   <view class="data-actions">

@@ -5,9 +5,6 @@
       <view class="eyebrow">过往足迹</view>
       <view class="page-title">历史</view>
     </view>
-    <button class="round-button" bindtap="onClosePanel" aria-label="关闭历史">
-      <text class="close-symbol">×</text>
-    </button>
   </view>
 
   <view class="search-box">

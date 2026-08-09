@@ -212,9 +212,11 @@ test('Mini Program reuses the web visual structure while reserving the WeChat sy
   assert.match(todayMarkup, /<app-header\s*\/>[\s\S]*class="date-row"[\s\S]*class="task-content"/);
   assert.match(todayMarkup, /class="arrow-symbol"[\s\S]*class="task-composer-row"[\s\S]*class="delete-symbol"/);
   assert.match(todayMarkup, /assets\/empty-note\.svg/);
-  assert.match(historyMarkup, /class="close-symbol"[\s\S]*class="history-summary"[\s\S]*累计完成[\s\S]*记录天数[\s\S]*class="history-day"/);
+  assert.match(historyMarkup, /class="history-summary"[\s\S]*累计完成[\s\S]*记录天数[\s\S]*class="history-day"/);
+  assert.doesNotMatch(historyMarkup, /close-symbol|onClosePanel/);
+  assert.doesNotMatch(settingsMarkup, /close-symbol|onClosePanel/);
   assert.match(fs.readFileSync(path.join(miniRoot, 'pages', 'history', 'history.wxss'), 'utf8'), /\.history-date\s*\{[\s\S]*width:\s*100% !important[\s\S]*margin:\s*0 !important/);
-  assert.match(appStyles, /\.round-button\s*\{[\s\S]*margin:\s*0 0 0 auto !important/);
+  assert.doesNotMatch(appStyles, /\.round-button|\.close-symbol/);
   assert.match(settingsMarkup, /class="data-actions"[\s\S]*class="data-note/);
   assert.match(tabMarkup, /selectedIconPath/);
   assert.match(fs.readFileSync(path.join(miniRoot, 'custom-tab-bar', 'index.wxss'), 'utf8'), /\.tab-inner\s*\{[\s\S]*max-width:\s*460px[\s\S]*@media\s*\(min-width:\s*768px\)[\s\S]*max-width:\s*720px/);
