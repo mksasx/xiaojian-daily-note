@@ -25,7 +25,7 @@
   min-width: 0;
   height: 40px;
   color: #2d302d;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .search-placeholder {
@@ -59,7 +59,7 @@
 .summary-number {
   color: #3c765d;
   font-family: Georgia, serif;
-  font-size: 23px;
+  font-size: 25px;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -71,7 +71,7 @@
 .summary-label {
   margin-top: 2px;
   color: #6f736d;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .history-day {
@@ -83,25 +83,26 @@
   align-items: baseline;
   justify-content: space-between;
   width: 100%;
-  padding: 0 0 7px;
   background: transparent;
   border-bottom: 1px solid #e6e2d8;
   text-align: left;
+  padding: 0 0 7px !important;
 }
 
 .history-date-title {
   flex: 1;
   min-width: 0;
   font-family: Georgia, "Songti SC", serif;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 700;
+  text-align: left;
 }
 
 .history-progress {
   flex: none;
   margin-left: 10px;
   color: #898b84;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .history-task {
@@ -109,7 +110,7 @@
   align-items: flex-start;
   padding: 7px 0;
   color: #666862;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.45;
 }
 

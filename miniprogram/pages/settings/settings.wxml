@@ -6,7 +6,7 @@
       <view class="page-title">设置</view>
     </view>
     <button class="round-button" bindtap="onClosePanel" aria-label="关闭设置">
-      <image src="/assets/close.svg" mode="aspectFit" />
+      <text class="close-symbol">×</text>
     </button>
   </view>
 
@@ -41,7 +41,7 @@
         <text class="note-title">{{syncTitle}}</text>
         <view class="sync-dot {{syncTone}}"></view>
       </view>
-      <text class="note-text">{{syncCopy}} 不读取微信号、昵称或手机号。</text>
+      <text class="note-text">{{syncCopy}}</text>
     </view>
   </view>
 

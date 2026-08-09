@@ -19,28 +19,30 @@
 
   <view class="date-nav">
     <button class="nav-arrow" bindtap="onPreviousDay" aria-label="前一天">
-      <image src="/assets/chevron-left.svg" mode="aspectFit" />
+      <text class="arrow-symbol">‹</text>
     </button>
     <button class="today-pill {{isToday ? 'is-today' : ''}}" bindtap="onJumpToday">今天</button>
     <button class="nav-arrow" bindtap="onNextDay" aria-label="后一天">
-      <image src="/assets/chevron-right.svg" mode="aspectFit" />
+      <text class="arrow-symbol">›</text>
     </button>
   </view>
 
   <form class="task-composer" bindsubmit="onAddTask">
-    <text class="composer-plus">+</text>
-    <input
-      class="task-input"
-      name="text"
-      value="{{inputValue}}"
-      maxlength="120"
-      placeholder="写下今天想完成的事…"
-      placeholder-class="input-placeholder"
-      confirm-type="done"
-      bindinput="onInput"
-      bindconfirm="onAddTask"
-    />
-    <button wx:if="{{inputValue}}" class="add-button" form-type="submit">添加</button>
+    <view class="task-composer-row">
+      <text class="composer-plus">+</text>
+      <input
+        class="task-input"
+        name="text"
+        value="{{inputValue}}"
+        maxlength="120"
+        placeholder="写下今天想完成的事…"
+        placeholder-class="input-placeholder"
+        confirm-type="done"
+        bindinput="onInput"
+        bindconfirm="onAddTask"
+      />
+      <button wx:if="{{inputValue}}" class="add-button" form-type="submit">添加</button>
+    </view>
   </form>
 
   <button wx:if="{{carryCount > 0}}" class="carry-banner" bindtap="onCarryTasks">
@@ -60,7 +62,7 @@
         <button class="task-check" data-id="{{item.id}}" bindtap="onToggleTask" aria-label="标记完成"></button>
         <text class="task-text" data-id="{{item.id}}" bindtap="onOpenEdit">{{item.text}}</text>
         <button class="task-delete" data-id="{{item.id}}" bindtap="onDeleteTask" aria-label="删除">
-          <image src="/assets/trash.svg" mode="aspectFit" />
+          <text class="delete-symbol">×</text>
         </button>
       </view>
     </view>
@@ -68,14 +70,14 @@
     <view wx:if="{{completedTasks.length}}" class="completed-block">
       <button class="completed-heading" bindtap="onToggleCompleted">
         <text>已完成 · {{completedTasks.length}}</text>
-        <image src="{{showCompleted ? '/assets/chevron-up.svg' : '/assets/chevron-down.svg'}}" mode="aspectFit" />
+        <text class="completed-arrow">{{showCompleted ? '⌃' : '⌄'}}</text>
       </button>
       <view wx:if="{{showCompleted}}" class="task-list completed-list">
         <view wx:for="{{completedTasks}}" wx:key="id" class="task-item is-done">
           <button class="task-check is-checked" data-id="{{item.id}}" bindtap="onToggleTask">✓</button>
           <text class="task-text" data-id="{{item.id}}" bindtap="onOpenEdit">{{item.text}}</text>
           <button class="task-delete" data-id="{{item.id}}" bindtap="onDeleteTask">
-            <image src="/assets/trash.svg" mode="aspectFit" />
+            <text class="delete-symbol">×</text>
           </button>
         </view>
       </view>

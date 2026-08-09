@@ -21,7 +21,7 @@
 
 .date-title {
   font-family: Georgia, "Songti SC", serif;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -68,7 +68,7 @@
 
 .progress-center text {
   color: #3c765d;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -83,30 +83,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 34px;
-  width: 34px;
-  min-width: 34px;
-  max-width: 34px;
-  height: 34px;
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: 34px !important;
   margin: 0 4px;
   border-radius: 50%;
+  padding: 0 !important;
 }
 
-.nav-arrow image {
-  width: 21px;
-  height: 21px;
+.arrow-symbol {
+  display: block;
+  color: #898b84;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 32px;
 }
 
 .today-pill {
-  min-width: 60px;
+  flex: 0 0 62px !important;
+  box-sizing: border-box;
+  width: 62px !important;
+  min-width: 62px !important;
+  max-width: 62px !important;
   margin: 0 4px;
-  padding: 5px 14px;
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid #e6e2d8;
   border-radius: 999px;
   color: #898b84;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
+  padding: 5px 10px !important;
 }
 
 .today-pill.is-today {
@@ -116,8 +124,8 @@
 }
 
 .task-composer {
-  display: flex;
-  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
   min-height: 51px;
   padding: 5px 6px 5px 15px;
   background: #fffefa;
@@ -126,12 +134,22 @@
   box-shadow: 0 5px 18px rgba(62, 58, 48, 0.05);
 }
 
+.task-composer-row {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 39px;
+  flex-wrap: nowrap;
+}
+
 .task-composer:focus-within {
   border-color: #9fbbaa;
   box-shadow: 0 6px 20px rgba(60, 118, 93, 0.11);
 }
 
 .composer-plus {
+  flex: 0 0 auto;
   margin: -2px 9px 0 0;
   color: #3c765d;
   font-family: Georgia, serif;
@@ -141,11 +159,13 @@
 }
 
 .task-input {
+  display: block;
   flex: 1;
+  width: 0;
   min-width: 0;
   height: 41px;
   color: #2d302d;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .input-placeholder {
@@ -154,12 +174,12 @@
 
 .add-button {
   flex: none;
-  padding: 8px 14px;
   background: #3c765d;
   border-radius: 10px;
   color: #fff;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
+  padding: 8px 14px !important;
 }
 
 .carry-banner {
@@ -172,7 +192,7 @@
   background: #f2e7dc;
   border-radius: 10px;
   color: #785641;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 18px;
 }
 
@@ -194,7 +214,7 @@
 .task-item {
   display: flex;
   align-items: center;
-  min-height: 52px;
+  min-height: 56px;
   border-bottom: 1px solid rgba(219, 215, 204, 0.7);
 }
 
@@ -202,14 +222,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 23px;
+  flex: 0 0 24px !important;
   box-sizing: border-box;
-  width: 23px;
-  min-width: 23px;
-  max-width: 23px;
-  height: 23px;
-  min-height: 23px;
-  max-height: 23px;
+  width: 24px !important;
+  min-width: 24px !important;
+  max-width: 24px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
   margin-right: 14px;
   background: transparent;
   border: 1.8px solid #aaa99f;
@@ -217,6 +237,7 @@
   color: #fff;
   font-size: 15px;
   line-height: 20px;
+  padding: 0 !important;
 }
 
 .task-check.is-checked {
@@ -228,7 +249,7 @@
   flex: 1;
   min-width: 0;
   padding: 14px 0;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.45;
   overflow-wrap: anywhere;
 }
@@ -237,18 +258,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 34px;
-  width: 34px;
-  min-width: 34px;
-  max-width: 34px;
-  height: 34px;
+  flex: 0 0 36px !important;
+  width: 36px !important;
+  min-width: 36px !important;
+  max-width: 36px !important;
+  height: 36px !important;
+  min-height: 36px !important;
+  max-height: 36px !important;
   margin-left: 10px;
   border-radius: 8px;
+  padding: 0 !important;
 }
 
-.task-delete image {
-  width: 19px;
-  height: 19px;
+.delete-symbol {
+  display: block;
+  color: #aaa79d;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 34px;
 }
 
 .is-done .task-text {
@@ -265,16 +292,15 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 7px 0;
+  padding: 7px 0 !important;
   color: #898b84;
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.05em;
   text-align: left;
 }
 
-.completed-heading image {
-  width: 19px;
-  height: 19px;
+.completed-arrow {
+  font-size: 18px;
 }
 
 .completed-list {
@@ -339,6 +365,7 @@
   border-radius: 999px;
   font-size: 13px;
   line-height: 34px;
+  padding: 0 12px !important;
 }
 
 .dialog-button.secondary {

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'daily-note-pwa-v1.4.0';
+const CACHE_NAME = 'daily-note-pwa-v1.4.1';
 const APP_SHELL = [
   './', './index.html', './styles.css', './task-utils.js', './platform.js', './renderer.js',
   './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'

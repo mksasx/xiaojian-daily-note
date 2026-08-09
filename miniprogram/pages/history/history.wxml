@@ -6,7 +6,7 @@
       <view class="page-title">历史</view>
     </view>
     <button class="round-button" bindtap="onClosePanel" aria-label="关闭历史">
-      <image src="/assets/close.svg" mode="aspectFit" />
+      <text class="close-symbol">×</text>
     </button>
   </view>
 
@@ -23,12 +23,12 @@
 
   <view class="history-summary">
     <view class="summary-card">
-      <text class="summary-number">{{dayCount}}</text>
-      <text class="summary-label">有记录的日子</text>
+      <text class="summary-number">{{completedCount}}</text>
+      <text class="summary-label">累计完成</text>
     </view>
     <view class="summary-card">
-      <text class="summary-number">{{taskCount}}</text>
-      <text class="summary-label">记录过的待办</text>
+      <text class="summary-number">{{dayCount}}</text>
+      <text class="summary-label">记录天数</text>
     </view>
   </view>
 

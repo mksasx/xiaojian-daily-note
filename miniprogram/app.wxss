@@ -5,7 +5,7 @@ page {
     #f7f5ef;
   color: #2d302d;
   font-family: "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 button,
@@ -46,7 +46,7 @@ button::after {
 .eyebrow {
   margin: 0 0 4px;
   color: #3c765d;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.15em;
 }
@@ -54,7 +54,7 @@ button::after {
 .page-title {
   margin: 0;
   font-family: Georgia, "Songti SC", serif;
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -79,11 +79,20 @@ button::after {
   max-height: 40px;
   background: #efede5;
   border-radius: 50%;
+  padding: 0 !important;
 }
 
 .round-button image {
   width: 20px;
   height: 20px;
+}
+
+.close-symbol {
+  display: block;
+  color: #2d302d;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 38px;
 }
 
 .empty-panel {
@@ -102,14 +111,14 @@ button::after {
   margin-top: 16px;
   color: #595b57;
   font-family: Georgia, "Songti SC", serif;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: 700;
 }
 
 .empty-copy {
   margin-top: 7px;
   color: #898b84;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 @media (max-height: 570px) {

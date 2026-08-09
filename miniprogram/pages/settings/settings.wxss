@@ -20,6 +20,7 @@
   border: 1px solid #e6e2d8;
   border-radius: 12px;
   text-align: left;
+  padding: 9px 10px !important;
 }
 
 .data-action.wide {
@@ -47,14 +48,14 @@
 
 .action-title {
   color: #2d302d;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
 }
 
 .action-subtitle {
   margin-top: 2px;
   color: #898b84;
-  font-size: 9px;
+  font-size: 11px;
   line-height: 1.4;
 }
 
@@ -88,7 +89,7 @@
 }
 
 .note-title {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
@@ -96,7 +97,7 @@
   display: block;
   margin-top: 3px;
   color: #898b84;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.55;
 }
 
@@ -135,7 +136,7 @@
 .version {
   margin-top: 24px;
   color: #b1afa7;
-  font-size: 10px;
+  font-size: 11px;
   text-align: center;
 }
 

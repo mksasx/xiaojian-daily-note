@@ -8,6 +8,7 @@ Page({
     query: '',
     taskCount: 0,
     dayCount: 0,
+    completedCount: 0,
     groups: [],
     emptyCopy: '完成第一件小事后，这里会留下足迹。'
   },
@@ -33,7 +34,7 @@ Page({
       return {
         dateKey,
         title: formatDateHeading(dateKey).historyTitle,
-        progressText: `${progress.completed}/${progress.total} 完成`,
+        progressText: `${progress.completed}/${progress.total} 完成 · 查看`,
         tasks: tasksForDate(tasks, dateKey)
       };
     });
@@ -41,6 +42,7 @@ Page({
     this.setData({
       taskCount: this.store.tasks.length,
       dayCount,
+      completedCount: this.store.tasks.filter((task) => task.completed).length,
       groups,
       emptyCopy: query ? '没有找到相关记录。' : '完成第一件小事后，这里会留下足迹。'
     });
