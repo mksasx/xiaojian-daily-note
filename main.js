@@ -1,9 +1,15 @@
-const { app, BrowserWindow, dialog, ipcMain, screen, shell } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, Menu, nativeImage, screen, shell, Tray } = require('electron');
 const path = require('path');
 const fs = require('fs/promises');
 const { normalizeBackup } = require('./src/task-utils');
 
 let mainWindow;
+let tray;
+let isQuitting = false;
+
+const launchHidden = process.argv.includes('--hidden');
+const appIconPath = path.join(__dirname, 'src', 'icons', process.platform === 'win32' ? 'icon.ico' : 'icon-512.png');
+const trayIconPath = path.join(__dirname, 'src', 'icons', 'tray-icon.png');
 
 const defaultStore = {
   version: 2,
@@ -18,6 +24,43 @@ const defaultStore = {
 
 function storePath() {
   return path.join(app.getPath('userData'), 'daily-note.json');
+}
+
+function showWindow() {
+  if (!mainWindow) {
+    createWindow(true);
+    return;
+  }
+  if (mainWindow.isMinimized()) mainWindow.restore();
+  mainWindow.show();
+  mainWindow.focus();
+}
+
+function hideWindow() {
+  mainWindow?.hide();
+}
+
+function toggleWindow() {
+  if (mainWindow?.isVisible()) hideWindow();
+  else showWindow();
+}
+
+function createTray() {
+  const trayImage = nativeImage.createFromPath(trayIconPath);
+  tray = new Tray(trayImage);
+  tray.setToolTip('小笺 · 每日待办');
+  tray.setContextMenu(Menu.buildFromTemplate([
+    { label: '打开小笺', click: showWindow },
+    { type: 'separator' },
+    {
+      label: '退出小笺',
+      click: () => {
+        isQuitting = true;
+        app.quit();
+      }
+    }
+  ]));
+  tray.on('click', toggleWindow);
 }
 
 async function loadStore() {
@@ -71,7 +114,7 @@ async function importBackup() {
   }
 }
 
-function createWindow() {
+function createWindow(showOnReady = true) {
   const display = screen.getPrimaryDisplay().workArea;
   mainWindow = new BrowserWindow({
     width: 420,
@@ -80,6 +123,8 @@ function createWindow() {
     minHeight: 520,
     maxWidth: 560,
     show: false,
+    skipTaskbar: true,
+    icon: appIconPath,
     x: Math.max(display.x, display.x + display.width - 452),
     y: Math.max(display.y, display.y + 32),
     frame: false,
@@ -94,10 +139,31 @@ function createWindow() {
   });
 
   mainWindow.loadFile(path.join(__dirname, 'src', 'index.html'));
-  mainWindow.once('ready-to-show', () => mainWindow.show());
+  mainWindow.once('ready-to-show', () => {
+    if (showOnReady) showWindow();
+  });
+  mainWindow.on('minimize', (event) => {
+    event.preventDefault();
+    hideWindow();
+  });
+  mainWindow.on('close', (event) => {
+    if (isQuitting) return;
+    event.preventDefault();
+    hideWindow();
+  });
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 }
 
-app.whenReady().then(() => {
+const hasSingleInstanceLock = app.requestSingleInstanceLock();
+if (!hasSingleInstanceLock) {
+  app.quit();
+} else {
+  app.on('second-instance', showWindow);
+  app.whenReady().then(() => {
+  app.setAppUserModelId('com.dailynote.desktop');
+  if (process.platform === 'darwin') app.dock.hide();
   ipcMain.handle('store:load', loadStore);
   ipcMain.handle('store:save', (_event, data) => saveStore(data));
   ipcMain.handle('data:export', (_event, data) => exportBackup(data));
@@ -110,8 +176,8 @@ app.whenReady().then(() => {
     }
     shell.showItemInFolder(storePath());
   });
-  ipcMain.handle('window:minimize', () => mainWindow?.minimize());
-  ipcMain.handle('window:close', () => mainWindow?.close());
+  ipcMain.handle('window:minimize', hideWindow);
+  ipcMain.handle('window:close', hideWindow);
   ipcMain.handle('window:set-always-on-top', (_event, enabled) => {
     mainWindow?.setAlwaysOnTop(Boolean(enabled), 'floating');
     return mainWindow?.isAlwaysOnTop() ?? false;
@@ -122,15 +188,18 @@ app.whenReady().then(() => {
     mainWindow.setSize(width, compact ? 520 : 680, true);
   });
   ipcMain.handle('app:set-login-item', (_event, enabled) => {
-    app.setLoginItemSettings({ openAtLogin: Boolean(enabled) });
-    return app.getLoginItemSettings().openAtLogin;
+    const loginOptions = { openAtLogin: Boolean(enabled) };
+    if (process.platform === 'win32') loginOptions.args = ['--hidden'];
+    if (process.platform === 'darwin') loginOptions.openAsHidden = true;
+    app.setLoginItemSettings(loginOptions);
+    return app.getLoginItemSettings(process.platform === 'win32' ? { args: ['--hidden'] } : {}).openAtLogin;
   });
-  createWindow();
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  createTray();
+  createWindow(!launchHidden);
+    app.on('activate', showWindow);
   });
-});
+}
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+app.on('before-quit', () => {
+  isQuitting = true;
 });
