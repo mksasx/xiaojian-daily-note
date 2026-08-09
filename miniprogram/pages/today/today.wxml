@@ -1,0 +1,84 @@
+<view class="page-shell today-page">
+  <view class="top-row">
+    <view>
+      <picker mode="date" value="{{dateKey}}" bindchange="onDateChange">
+        <view class="date-picker">
+          <text class="weekday">{{weekday}}</text>
+          <view class="date-title-row">
+            <text class="date-title">{{dateTitle}}</text>
+            <text class="date-arrow">⌄</text>
+          </view>
+        </view>
+      </picker>
+    </view>
+    <view class="progress-ring">
+      <text class="progress-value">{{percent}}%</text>
+      <text class="progress-copy">{{completed}}/{{total}}</text>
+    </view>
+  </view>
+
+  <view class="day-nav">
+    <button class="day-arrow" bindtap="onPreviousDay" aria-label="前一天">‹</button>
+    <button class="today-chip" bindtap="onJumpToday">今天</button>
+    <button class="day-arrow" bindtap="onNextDay" aria-label="后一天">›</button>
+  </view>
+
+  <form class="task-form surface" bindsubmit="onAddTask">
+    <text class="add-mark">＋</text>
+    <input
+      class="task-input"
+      name="text"
+      value="{{inputValue}}"
+      maxlength="120"
+      placeholder="写下今天想完成的事…"
+      placeholder-class="input-placeholder"
+      confirm-type="done"
+      bindinput="onInput"
+      bindconfirm="onAddTask"
+    />
+    <button wx:if="{{inputValue}}" class="add-button" form-type="submit">添加</button>
+  </form>
+
+  <button wx:if="{{carryCount > 0}}" class="carry-banner" bindtap="onCarryTasks">
+    昨天还有 {{carryCount}} 项未完成，移到今天
+  </button>
+
+  <view wx:if="{{activeTasks.length}}" class="task-list">
+    <view wx:for="{{activeTasks}}" wx:key="id" class="task-item surface">
+      <button class="task-check" data-id="{{item.id}}" bindtap="onToggleTask" aria-label="标记完成"></button>
+      <text class="task-text" data-id="{{item.id}}" bindtap="onOpenEdit">{{item.text}}</text>
+      <button class="task-delete" data-id="{{item.id}}" bindtap="onDeleteTask" aria-label="删除">×</button>
+    </view>
+  </view>
+
+  <view wx:if="{{completedTasks.length}}" class="completed-block">
+    <button class="completed-heading" bindtap="onToggleCompleted">
+      <text>已完成 · {{completedTasks.length}}</text>
+      <text>{{showCompleted ? '⌃' : '⌄'}}</text>
+    </button>
+    <view wx:if="{{showCompleted}}" class="task-list completed-list">
+      <view wx:for="{{completedTasks}}" wx:key="id" class="task-item surface is-done">
+        <button class="task-check is-checked" data-id="{{item.id}}" bindtap="onToggleTask">✓</button>
+        <text class="task-text" data-id="{{item.id}}" bindtap="onOpenEdit">{{item.text}}</text>
+        <button class="task-delete" data-id="{{item.id}}" bindtap="onDeleteTask">×</button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{isEmpty}}" class="empty-panel">
+    <view class="empty-mark">✓</view>
+    <view class="empty-title">今天，从一件小事开始</view>
+    <view class="empty-copy">写下来，然后轻轻划掉它。</view>
+  </view>
+
+  <view wx:if="{{showEditDialog}}" class="dialog-mask" catchtouchmove="noop">
+    <view class="edit-dialog surface">
+      <view class="dialog-title">编辑待办</view>
+      <input class="edit-input" value="{{editValue}}" maxlength="120" focus bindinput="onEditInput" />
+      <view class="dialog-actions">
+        <button class="dialog-button secondary" bindtap="onCancelEdit">取消</button>
+        <button class="dialog-button primary" bindtap="onSaveEdit">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

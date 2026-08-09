@@ -20,6 +20,7 @@ macOS 安装包目前未使用 Apple Developer 证书签名。首次打开时如
 - 删除后可撤销，历史日期可直接返回查看
 - JSON 备份导出、校验与跨设备无损合并
 - 可安装的离线 PWA 手机版，和桌面版共用备份格式
+- 原生微信小程序版本，支持本地使用和手动备份互通
 - 窗口置顶、紧凑模式、开机启动
 - 本地 JSON 数据存储，原子写入避免意外损坏
 
@@ -54,6 +55,8 @@ npm run dist
 ```
 
 Windows 安装包需在 Windows 上构建，macOS DMG 需在 macOS 上构建。应用数据存放在 Electron 的 `userData` 目录中。
+
+微信小程序项目可直接用微信开发者工具导入仓库根目录，具体说明见 [miniprogram/README.md](miniprogram/README.md)。
 
 推送 `v*.*.*` 格式的版本标签后，GitHub Actions 会自动构建 Windows x64 安装程序和 macOS 通用 DMG，并上传到对应的 GitHub Release。
 

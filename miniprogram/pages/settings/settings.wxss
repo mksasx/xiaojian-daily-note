@@ -1,0 +1,123 @@
+.settings-page {
+  padding-top: 42rpx;
+}
+
+.eyebrow {
+  color: #3c765d;
+  font-size: 24rpx;
+  font-weight: 650;
+  letter-spacing: 0.15em;
+}
+
+.page-title {
+  margin-top: 10rpx;
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 64rpx;
+  font-weight: 700;
+}
+
+.page-copy {
+  max-width: 590rpx;
+  margin-top: 16rpx;
+  color: #858983;
+  font-size: 25rpx;
+  line-height: 1.65;
+}
+
+.status-card {
+  display: flex;
+  align-items: baseline;
+  margin-top: 34rpx;
+  padding: 30rpx;
+}
+
+.status-number {
+  color: #3c765d;
+  font-family: Georgia, serif;
+  font-size: 48rpx;
+  font-weight: 700;
+}
+
+.status-label {
+  margin-left: 8rpx;
+  color: #838781;
+  font-size: 23rpx;
+}
+
+.status-divider {
+  width: 1rpx;
+  height: 48rpx;
+  margin: 0 32rpx;
+  background: #ded9d0;
+}
+
+.settings-group {
+  overflow: hidden;
+}
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 116rpx;
+  margin: 0;
+  padding: 24rpx 28rpx;
+  background: transparent;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.row-title {
+  color: #333733;
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.row-copy {
+  max-width: 540rpx;
+  margin-top: 6rpx;
+  color: #92948f;
+  font-size: 22rpx;
+  line-height: 1.5;
+}
+
+.row-arrow {
+  margin-left: 18rpx;
+  color: #9a9c97;
+  font-size: 42rpx;
+}
+
+.row-divider {
+  height: 1rpx;
+  margin-left: 28rpx;
+  background: #e6e1d8;
+}
+
+.sync-card {
+  display: flex;
+  align-items: flex-start;
+  padding: 28rpx;
+}
+
+.sync-dot {
+  flex: none;
+  width: 18rpx;
+  height: 18rpx;
+  margin: 10rpx 20rpx 0 0;
+  background: #d59668;
+  border-radius: 50%;
+  box-shadow: 0 0 0 8rpx #f6e9df;
+}
+
+.danger .row-title {
+  color: #aa5749;
+}
+
+.version {
+  padding: 46rpx 0 18rpx;
+  color: #a2a49f;
+  font-size: 22rpx;
+  text-align: center;
+}

@@ -1,0 +1,47 @@
+<view class="page-shell history-page">
+  <view class="history-header">
+    <view>
+      <view class="eyebrow">过往记录</view>
+      <view class="page-title">历史</view>
+    </view>
+    <view class="summary">
+      <text>{{dayCount}} 天</text>
+      <text>{{taskCount}} 项</text>
+    </view>
+  </view>
+
+  <view class="search-box surface">
+    <text class="search-icon">⌕</text>
+    <input
+      class="search-input"
+      value="{{query}}"
+      placeholder="搜索待办记录"
+      placeholder-class="search-placeholder"
+      bindinput="onSearchInput"
+    />
+  </view>
+
+  <view wx:if="{{groups.length}}" class="history-list">
+    <view wx:for="{{groups}}" wx:key="dateKey" class="history-group surface">
+      <button class="history-date" data-date="{{item.dateKey}}" bindtap="onOpenDate">
+        <view>
+          <view class="history-date-title">{{item.title}}</view>
+          <view class="history-progress">{{item.progressText}} · 查看当日</view>
+        </view>
+        <text class="history-arrow">›</text>
+      </button>
+      <view class="history-tasks">
+        <view wx:for="{{item.tasks}}" wx:for-item="task" wx:key="id" class="history-task {{task.completed ? 'is-done' : ''}}">
+          <view class="history-dot {{task.completed ? 'is-complete' : ''}}"></view>
+          <text>{{task.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:else class="empty-panel history-empty">
+    <view class="empty-mark">⌕</view>
+    <view class="empty-title">还没有历史记录</view>
+    <view class="empty-copy">{{emptyCopy}}</view>
+  </view>
+</view>

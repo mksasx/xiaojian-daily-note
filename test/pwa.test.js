@@ -23,6 +23,12 @@ test('web platform loads before the renderer', () => {
   assert.match(html, /manifest\.webmanifest/);
 });
 
+test('web backups identify the current package version', () => {
+  const platform = fs.readFileSync(path.join(sourceRoot, 'platform.js'), 'utf8');
+  const packageConfig = JSON.parse(fs.readFileSync(path.resolve(sourceRoot, '..', 'package.json'), 'utf8'));
+  assert.ok(platform.includes(`appVersion: '${packageConfig.version}'`));
+});
+
 test('offline shell contains every core PWA asset', () => {
   const worker = fs.readFileSync(path.join(sourceRoot, 'service-worker.js'), 'utf8');
   for (const asset of ['index.html', 'styles.css', 'task-utils.js', 'platform.js', 'renderer.js', 'manifest.webmanifest']) {

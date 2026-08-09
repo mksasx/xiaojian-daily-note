@@ -1,0 +1,17 @@
+{
+  "appid": "touristappid",
+  "projectname": "xiaojian-daily-note",
+  "compileType": "miniprogram",
+  "miniprogramRoot": "miniprogram/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "setting": {
+    "es6": true,
+    "postcss": true,
+    "minified": true,
+    "enhance": true,
+    "showShadowRootInWxmlPanel": true
+  }
+}

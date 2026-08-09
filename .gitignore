@@ -1,5 +1,6 @@
 node_modules/
 build/
+project.private.config.json
 .npm-cache/
 .electron-cache/
 .smoke/

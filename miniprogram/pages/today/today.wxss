@@ -1,0 +1,277 @@
+.today-page {
+  padding-top: 44rpx;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.weekday {
+  color: #3c765d;
+  font-size: 25rpx;
+  font-weight: 650;
+  letter-spacing: 0.15em;
+}
+
+.date-title-row {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+}
+
+.date-title {
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 66rpx;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.date-arrow {
+  margin-left: 18rpx;
+  color: #777b75;
+  font-size: 38rpx;
+}
+
+.progress-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 108rpx;
+  height: 108rpx;
+  border: 7rpx solid #e5e3db;
+  border-radius: 999rpx;
+}
+
+.progress-value {
+  color: #3c765d;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.progress-copy {
+  margin-top: 2rpx;
+  color: #a1a39e;
+  font-size: 19rpx;
+}
+
+.day-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 42rpx 0 32rpx;
+}
+
+.day-arrow,
+.today-chip {
+  margin: 0 14rpx;
+  padding: 0;
+  background: transparent;
+  color: #7b7f79;
+  line-height: 58rpx;
+}
+
+.day-arrow {
+  width: 58rpx;
+  height: 58rpx;
+  font-size: 48rpx;
+}
+
+.today-chip {
+  min-width: 116rpx;
+  height: 58rpx;
+  border: 2rpx solid #b9d5c8;
+  border-radius: 999rpx;
+  color: #3c765d;
+  font-size: 25rpx;
+}
+
+.task-form {
+  display: flex;
+  align-items: center;
+  min-height: 104rpx;
+  padding: 0 24rpx;
+}
+
+.add-mark {
+  color: #3c765d;
+  font-size: 40rpx;
+}
+
+.task-input {
+  flex: 1;
+  height: 104rpx;
+  margin-left: 12rpx;
+  font-size: 29rpx;
+}
+
+.input-placeholder {
+  color: #a9aaa5;
+}
+
+.add-button {
+  margin: 0;
+  padding: 0 16rpx;
+  background: #3c765d;
+  border-radius: 999rpx;
+  color: #fff;
+  font-size: 23rpx;
+  line-height: 54rpx;
+}
+
+.carry-banner {
+  width: 100%;
+  margin: 22rpx 0 0;
+  padding: 20rpx 24rpx;
+  background: #edf5f0;
+  border: 1rpx solid #c8ddd2;
+  border-radius: 20rpx;
+  color: #3c765d;
+  font-size: 25rpx;
+  line-height: 1.45;
+}
+
+.task-list {
+  margin-top: 28rpx;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  min-height: 94rpx;
+  margin-bottom: 16rpx;
+  padding: 0 18rpx 0 22rpx;
+}
+
+.task-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42rpx;
+  height: 42rpx;
+  margin: 0 20rpx 0 0;
+  padding: 0;
+  background: #fff;
+  border: 3rpx solid #98a69f;
+  border-radius: 12rpx;
+  color: #fff;
+  font-size: 28rpx;
+  line-height: 38rpx;
+}
+
+.task-check.is-checked {
+  background: #3c765d;
+  border-color: #3c765d;
+}
+
+.task-text {
+  flex: 1;
+  padding: 26rpx 0;
+  font-size: 29rpx;
+  line-height: 1.5;
+}
+
+.task-delete {
+  width: 54rpx;
+  height: 54rpx;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: #aaa59c;
+  font-size: 38rpx;
+  line-height: 52rpx;
+}
+
+.is-done {
+  opacity: 0.68;
+}
+
+.is-done .task-text {
+  text-decoration: line-through;
+}
+
+.completed-block {
+  margin-top: 22rpx;
+}
+
+.completed-heading {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0;
+  padding: 20rpx 8rpx;
+  background: transparent;
+  color: #777b75;
+  font-size: 25rpx;
+  line-height: 1.4;
+  text-align: left;
+}
+
+.completed-list {
+  margin-top: 4rpx;
+}
+
+.dialog-mask {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  background: rgba(29, 31, 29, 0.38);
+}
+
+.edit-dialog {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 34rpx;
+}
+
+.dialog-title {
+  font-family: Georgia, "Songti SC", serif;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.edit-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 92rpx;
+  margin-top: 28rpx;
+  padding: 0 22rpx;
+  background: #f4f2ec;
+  border: 2rpx solid #ddd7cc;
+  border-radius: 18rpx;
+  font-size: 28rpx;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 28rpx;
+}
+
+.dialog-button {
+  min-width: 130rpx;
+  margin: 0 0 0 16rpx;
+  padding: 0 22rpx;
+  border-radius: 999rpx;
+  font-size: 26rpx;
+  line-height: 68rpx;
+}
+
+.dialog-button.secondary {
+  background: #efede7;
+  color: #626660;
+}
+
+.dialog-button.primary {
+  background: #3c765d;
+  color: #fff;
+}
