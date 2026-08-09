@@ -5,21 +5,39 @@ page {
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
+button,
+input {
+  box-sizing: border-box;
+  font: inherit;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  line-height: normal;
+}
+
 button::after {
   border: 0;
 }
 
 .page-shell {
   box-sizing: border-box;
+  width: 100%;
+  max-width: 460px;
   min-height: 100vh;
-  padding: 34rpx 38rpx 48rpx;
+  margin: 0 auto;
+  padding: 22rpx 34rpx calc(148rpx + env(safe-area-inset-bottom));
 }
 
 .surface {
   background: rgba(255, 255, 252, 0.92);
   border: 1rpx solid #e4ded3;
-  border-radius: 28rpx;
-  box-shadow: 0 12rpx 34rpx rgba(55, 48, 37, 0.06);
+  border-radius: 24rpx;
+  box-shadow: 0 10rpx 28rpx rgba(55, 48, 37, 0.055);
 }
 
 .muted {
@@ -27,7 +45,7 @@ button::after {
 }
 
 .section-title {
-  margin: 34rpx 4rpx 18rpx;
+  margin: 28rpx 4rpx 16rpx;
   color: #686d66;
   font-size: 24rpx;
   font-weight: 600;
@@ -35,7 +53,7 @@ button::after {
 }
 
 .empty-panel {
-  padding: 96rpx 28rpx;
+  padding: 72rpx 24rpx;
   text-align: center;
 }
 
@@ -43,24 +61,31 @@ button::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90rpx;
-  height: 90rpx;
-  margin: 0 auto 28rpx;
+  width: 78rpx;
+  height: 78rpx;
+  margin: 0 auto 24rpx;
   border: 3rpx solid #3c765d;
   border-radius: 24rpx;
   color: #3c765d;
-  font-size: 54rpx;
+  font-size: 46rpx;
   transform: rotate(-3deg);
 }
 
 .empty-title {
   font-family: Georgia, "Songti SC", serif;
-  font-size: 34rpx;
+  font-size: 31rpx;
   font-weight: 700;
 }
 
 .empty-copy {
   margin-top: 12rpx;
   color: #9a9b96;
-  font-size: 25rpx;
+  font-size: 24rpx;
+}
+
+@media (max-width: 350px) {
+  .page-shell {
+    padding-right: 26rpx;
+    padding-left: 26rpx;
+  }
 }

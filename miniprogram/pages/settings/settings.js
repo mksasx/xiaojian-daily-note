@@ -1,8 +1,6 @@
 const { localDateKey, mergeStores, normalizeBackup } = require('../../utils/task-utils');
 const { loadStore, saveStore } = require('../../utils/store');
 const {
-  getCloudSyncPreference,
-  setCloudSyncEnabled,
   getSyncState,
   subscribeSyncState,
   requestCloudSync
@@ -17,19 +15,9 @@ function formatSyncTime(isoTime) {
 
 function syncPresentation(state) {
   const presentations = {
-    choice_required: {
-      title: '尚未选择同步方式',
-      copy: '开启后，待办会按当前微信用户保存到云端。',
-      tone: 'muted'
-    },
-    disabled: {
-      title: '仅本机保存',
-      copy: '关闭期间不会上传；已有云端副本会保留。',
-      tone: 'muted'
-    },
     idle: {
-      title: '等待同步',
-      copy: '联网后会自动合并本机和云端记录。',
+      title: '等待自动同步',
+      copy: '进入小程序或恢复联网后，会自动合并本机和云端记录。',
       tone: 'pending'
     },
     syncing: {
@@ -49,7 +37,7 @@ function syncPresentation(state) {
     },
     offline: {
       title: '当前离线',
-      copy: '待办已保存在本机，恢复联网后可以继续同步。',
+      copy: '待办已保存在本机，恢复联网后会自动补同步。',
       tone: 'pending'
     },
     unsupported: {
@@ -72,14 +60,13 @@ Page({
   data: {
     taskCount: 0,
     dayCount: 0,
-    appVersion: '1.1.0',
-    cloudSyncEnabled: false,
-    syncTitle: '等待同步',
-    syncCopy: '联网后会自动合并本机和云端记录。',
+    appVersion: '1.2.0',
+    syncTitle: '等待自动同步',
+    syncCopy: '进入小程序或恢复联网后，会自动合并本机和云端记录。',
     syncTone: 'pending',
     isSyncing: false,
-    clearDataTitle: '清空本机数据',
-    clearDataCopy: '删除当前小程序内的全部待办'
+    clearDataTitle: '清空本机与云端数据',
+    clearDataCopy: '删除本机与云端的全部待办，设置和备份不受影响'
   },
 
   onLoad() {
@@ -89,9 +76,8 @@ Page({
   onShow() {
     this.refreshSummary();
     this.applySyncState(getSyncState());
-    if (getCloudSyncPreference() === true) {
-      requestCloudSync().then(() => this.refreshSummary());
-    }
+    if (this.getTabBar) this.getTabBar().setData({ selected: 2 });
+    requestCloudSync().then(() => this.refreshSummary());
   },
 
   onUnload() {
@@ -110,28 +96,12 @@ Page({
 
   refreshSummary() {
     const store = loadStore();
-    const cloudSyncEnabled = getCloudSyncPreference() === true;
     this.setData({
       taskCount: store.tasks.length,
       dayCount: new Set(store.tasks.map((task) => task.date)).size,
-      cloudSyncEnabled,
-      clearDataTitle: cloudSyncEnabled ? '清空本机与云端数据' : '清空本机数据',
-      clearDataCopy: cloudSyncEnabled
-        ? '删除本机与云端的全部待办，设置和备份不受影响'
-        : '删除本机待办；已有云端副本将在下次同步时合并'
+      clearDataTitle: '清空本机与云端数据',
+      clearDataCopy: '删除本机与云端的全部待办，设置和备份不受影响'
     });
-  },
-
-  onCloudSyncChange(event) {
-    const enabled = Boolean(event.detail.value);
-    setCloudSyncEnabled(enabled);
-    this.refreshSummary();
-    this.applySyncState(getSyncState());
-    if (enabled) requestCloudSync().then(() => this.refreshSummary());
-  },
-
-  onSyncNow() {
-    requestCloudSync().then(() => this.refreshSummary());
   },
 
   backupPayload() {
@@ -209,7 +179,7 @@ Page({
       const merged = mergeStores(loadStore(), incoming, {});
       saveStore(merged);
       this.refreshSummary();
-      requestCloudSync().then(() => this.refreshSummary());
+      requestCloudSync({ force: true }).then(() => this.refreshSummary());
       wx.showToast({ title: '备份已合并', icon: 'success' });
     } catch (error) {
       console.error('Unable to import backup', error);
@@ -226,9 +196,8 @@ Page({
   },
 
   onClearData() {
-    const cloudSyncEnabled = getCloudSyncPreference() === true;
     wx.showModal({
-      title: cloudSyncEnabled ? '清空本机与云端？' : '清空本机数据？',
+      title: '清空本机与云端？',
       content: '此操作无法撤销，建议先导出一份备份。',
       confirmText: '清空',
       confirmColor: '#b45d4c',
@@ -242,7 +211,7 @@ Page({
         store.deletedTasks = [...deletionMap.values()];
         saveStore(store);
         this.refreshSummary();
-        requestCloudSync().then(() => this.refreshSummary());
+        requestCloudSync({ force: true }).then(() => this.refreshSummary());
         wx.showToast({ title: '已清空', icon: 'success' });
       }
     });

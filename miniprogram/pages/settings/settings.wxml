@@ -1,8 +1,8 @@
 <view class="page-shell settings-page">
   <view class="settings-header">
-    <view class="eyebrow">本地优先 · 微信同步</view>
+    <view class="eyebrow">本地优先 · 自动同步</view>
     <view class="page-title">设置</view>
-    <view class="page-copy">待办优先保存在本机；开启云同步后，同一微信账号可以在不同设备继续使用。</view>
+    <view class="page-copy">待办先保存在本机，再按当前微信用户自动同步；断网时也能正常使用。</view>
   </view>
 
   <view class="status-card surface">
@@ -40,30 +40,13 @@
     </button>
   </view>
 
-  <view class="section-title">微信云同步</view>
-  <view class="settings-group surface">
-    <view class="setting-row">
-      <view>
-        <view class="row-title">按微信用户同步</view>
-        <view class="row-copy">不读取微信号、昵称或手机号，只使用当前小程序的用户标识隔离数据。</view>
-      </view>
-      <switch checked="{{cloudSyncEnabled}}" color="#3c765d" bindchange="onCloudSyncChange" />
-    </view>
-    <view wx:if="{{cloudSyncEnabled}}" class="row-divider"></view>
-    <button wx:if="{{cloudSyncEnabled}}" class="setting-row" disabled="{{isSyncing}}" bindtap="onSyncNow">
-      <view>
-        <view class="row-title">立即同步</view>
-        <view class="row-copy">合并本机和云端记录，不会覆盖较新的修改。</view>
-      </view>
-      <text class="row-arrow">›</text>
-    </button>
-  </view>
-
-  <view class="sync-card surface">
+  <view class="section-title">微信自动同步</view>
+  <view class="sync-card surface {{isSyncing ? 'is-busy' : ''}}">
     <view class="sync-dot {{syncTone}}"></view>
     <view>
       <view class="row-title">{{syncTitle}}</view>
       <view class="row-copy">{{syncCopy}}</view>
+      <view class="sync-privacy">不读取微信号、昵称或手机号，仅用小程序用户标识隔离数据。</view>
     </view>
   </view>
 

@@ -1,5 +1,5 @@
 .today-page {
-  padding-top: 44rpx;
+  padding-top: 16rpx;
 }
 
 .top-row {
@@ -10,7 +10,7 @@
 
 .weekday {
   color: #3c765d;
-  font-size: 25rpx;
+  font-size: 23rpx;
   font-weight: 650;
   letter-spacing: 0.15em;
 }
@@ -18,20 +18,20 @@
 .date-title-row {
   display: flex;
   align-items: center;
-  margin-top: 10rpx;
+  margin-top: 6rpx;
 }
 
 .date-title {
   font-family: Georgia, "Songti SC", serif;
-  font-size: 66rpx;
-  font-weight: 700;
+  font-size: 58rpx;
+  font-weight: 650;
   letter-spacing: -0.04em;
 }
 
 .date-arrow {
-  margin-left: 18rpx;
+  margin-left: 12rpx;
   color: #777b75;
-  font-size: 38rpx;
+  font-size: 32rpx;
 }
 
 .progress-ring {
@@ -39,29 +39,31 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 108rpx;
-  height: 108rpx;
-  border: 7rpx solid #e5e3db;
+  flex: 0 0 94rpx;
+  box-sizing: border-box;
+  width: 94rpx;
+  height: 94rpx;
+  border: 6rpx solid #e5e3db;
   border-radius: 999rpx;
 }
 
 .progress-value {
   color: #3c765d;
-  font-size: 27rpx;
+  font-size: 24rpx;
   font-weight: 700;
 }
 
 .progress-copy {
   margin-top: 2rpx;
   color: #a1a39e;
-  font-size: 19rpx;
+  font-size: 18rpx;
 }
 
 .day-nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 42rpx 0 32rpx;
+  margin: 22rpx 0 20rpx;
 }
 
 .day-arrow,
@@ -74,37 +76,43 @@
 }
 
 .day-arrow {
+  flex: 0 0 54rpx;
   width: 58rpx;
-  height: 58rpx;
-  font-size: 48rpx;
+  height: 54rpx;
+  font-size: 42rpx;
+  line-height: 54rpx;
 }
 
 .today-chip {
+  flex: 0 0 112rpx;
   min-width: 116rpx;
-  height: 58rpx;
+  height: 54rpx;
   border: 2rpx solid #b9d5c8;
   border-radius: 999rpx;
   color: #3c765d;
-  font-size: 25rpx;
+  font-size: 23rpx;
+  line-height: 50rpx;
 }
 
 .task-form {
   display: flex;
   align-items: center;
-  min-height: 104rpx;
-  padding: 0 24rpx;
+  min-height: 88rpx;
+  padding: 0 20rpx;
 }
 
 .add-mark {
   color: #3c765d;
-  font-size: 40rpx;
+  flex: none;
+  font-size: 36rpx;
 }
 
 .task-input {
   flex: 1;
-  height: 104rpx;
-  margin-left: 12rpx;
-  font-size: 29rpx;
+  min-width: 0;
+  height: 88rpx;
+  margin-left: 10rpx;
+  font-size: 27rpx;
 }
 
 .input-placeholder {
@@ -112,50 +120,62 @@
 }
 
 .add-button {
+  flex: none;
   margin: 0;
   padding: 0 16rpx;
   background: #3c765d;
   border-radius: 999rpx;
   color: #fff;
   font-size: 23rpx;
-  line-height: 54rpx;
+  line-height: 50rpx;
 }
 
 .carry-banner {
   width: 100%;
-  margin: 22rpx 0 0;
-  padding: 20rpx 24rpx;
+  margin: 16rpx 0 0;
+  padding: 17rpx 20rpx;
   background: #edf5f0;
   border: 1rpx solid #c8ddd2;
   border-radius: 20rpx;
   color: #3c765d;
-  font-size: 25rpx;
+  font-size: 23rpx;
   line-height: 1.45;
 }
 
 .task-list {
-  margin-top: 28rpx;
+  margin-top: 18rpx;
 }
 
 .task-item {
   display: flex;
   align-items: center;
-  min-height: 94rpx;
-  margin-bottom: 16rpx;
-  padding: 0 18rpx 0 22rpx;
+  min-height: 82rpx;
+  margin: 0;
+  padding: 0 4rpx;
+  background: transparent;
+  border: 0;
+  border-bottom: 1rpx solid rgba(219, 215, 204, 0.76);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .task-check {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42rpx;
-  height: 42rpx;
-  margin: 0 20rpx 0 0;
+  flex: 0 0 40rpx;
+  box-sizing: border-box;
+  width: 40rpx;
+  min-width: 40rpx;
+  max-width: 40rpx;
+  height: 40rpx;
+  min-height: 40rpx;
+  max-height: 40rpx;
+  margin: 0 18rpx 0 0;
   padding: 0;
   background: #fff;
   border: 3rpx solid #98a69f;
-  border-radius: 12rpx;
+  border-radius: 11rpx;
   color: #fff;
   font-size: 28rpx;
   line-height: 38rpx;
@@ -168,20 +188,26 @@
 
 .task-text {
   flex: 1;
-  padding: 26rpx 0;
-  font-size: 29rpx;
+  min-width: 0;
+  padding: 20rpx 0;
+  font-size: 27rpx;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .task-delete {
-  width: 54rpx;
-  height: 54rpx;
+  flex: 0 0 52rpx;
+  box-sizing: border-box;
+  width: 52rpx;
+  min-width: 52rpx;
+  max-width: 52rpx;
+  height: 52rpx;
   margin: 0;
   padding: 0;
   background: transparent;
   color: #aaa59c;
-  font-size: 38rpx;
-  line-height: 52rpx;
+  font-size: 34rpx;
+  line-height: 50rpx;
 }
 
 .is-done {
@@ -193,7 +219,7 @@
 }
 
 .completed-block {
-  margin-top: 22rpx;
+  margin-top: 16rpx;
 }
 
 .completed-heading {
@@ -204,7 +230,7 @@
   padding: 20rpx 8rpx;
   background: transparent;
   color: #777b75;
-  font-size: 25rpx;
+  font-size: 23rpx;
   line-height: 1.4;
   text-align: left;
 }
@@ -231,6 +257,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 34rpx;
+  max-width: 420px;
 }
 
 .dialog-title {
@@ -274,4 +301,34 @@
 .dialog-button.primary {
   background: #3c765d;
   color: #fff;
+}
+
+@media (max-width: 350px) {
+  .date-title {
+    font-size: 54rpx;
+  }
+
+  .progress-ring {
+    flex-basis: 88rpx;
+    width: 88rpx;
+    height: 88rpx;
+  }
+
+  .day-nav {
+    margin-top: 18rpx;
+  }
+}
+
+@media (max-height: 700px) {
+  .today-page {
+    padding-top: 8rpx;
+  }
+
+  .day-nav {
+    margin: 12rpx 0;
+  }
+
+  .empty-panel {
+    padding-top: 48rpx;
+  }
 }

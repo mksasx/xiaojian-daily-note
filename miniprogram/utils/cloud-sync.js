@@ -6,9 +6,13 @@ const CLOUD_COLLECTION = 'daily_note_users';
 const OPENID_PLACEHOLDER = '{openid}';
 
 let cloudInitialized = false;
+let networkListenerRegistered = false;
 let syncQueue = Promise.resolve();
+let activeSyncPromise = null;
+let lastSyncCompletedAt = 0;
 let syncState = { status: 'idle', lastSyncedAt: '', errorCode: '' };
 const listeners = [];
+const ENTRY_SYNC_DEDUP_MS = 3000;
 
 function publishState(status, extra = {}) {
   syncState = { ...syncState, ...extra, status };
@@ -35,19 +39,6 @@ function subscribeSyncState(listener) {
   };
 }
 
-function getCloudSyncPreference() {
-  const enabled = loadStore().settings.cloudSyncEnabled;
-  return typeof enabled === 'boolean' ? enabled : null;
-}
-
-function setCloudSyncEnabled(enabled) {
-  const store = loadStore();
-  store.settings = { ...store.settings, cloudSyncEnabled: Boolean(enabled) };
-  saveStore(store);
-  publishState(enabled ? 'idle' : 'disabled', { errorCode: '' });
-  return store;
-}
-
 function initializeCloud() {
   if (cloudInitialized) return true;
   if (typeof wx === 'undefined' || !wx.cloud) {
@@ -57,10 +48,13 @@ function initializeCloud() {
   try {
     wx.cloud.init({ env: CLOUD_ENV_ID, traceUser: true });
     cloudInitialized = true;
-    const preference = getCloudSyncPreference();
-    publishState(preference === null ? 'choice_required' : (preference ? 'idle' : 'disabled'), {
-      errorCode: ''
-    });
+    publishState('idle', { errorCode: '' });
+    if (!networkListenerRegistered && typeof wx.onNetworkStatusChange === 'function') {
+      wx.onNetworkStatusChange((network) => {
+        if (network && network.isConnected) requestCloudSync({ force: true });
+      });
+      networkListenerRegistered = true;
+    }
     return true;
   } catch (error) {
     console.error('Unable to initialize CloudBase', error);
@@ -105,11 +99,6 @@ function classifyError(error) {
 }
 
 async function performCloudSync() {
-  const preference = getCloudSyncPreference();
-  if (preference !== true) {
-    publishState(preference === null ? 'choice_required' : 'disabled', { errorCode: '' });
-    return { ok: false, status: syncState.status, store: loadStore() };
-  }
   if (!initializeCloud()) {
     return { ok: false, status: syncState.status, store: loadStore() };
   }
@@ -157,9 +146,26 @@ async function performCloudSync() {
   }
 }
 
-function requestCloudSync() {
-  syncQueue = syncQueue.catch(() => null).then(performCloudSync);
-  return syncQueue;
+function requestCloudSync(options = {}) {
+  const force = Boolean(options.force);
+  if (!force && activeSyncPromise) return activeSyncPromise;
+  if (!force && lastSyncCompletedAt && Date.now() - lastSyncCompletedAt < ENTRY_SYNC_DEDUP_MS) {
+    return Promise.resolve({
+      ok: true,
+      status: syncState.status,
+      store: loadStore(),
+      lastSyncedAt: syncState.lastSyncedAt
+    });
+  }
+
+  const current = syncQueue.catch(() => null).then(performCloudSync);
+  syncQueue = current;
+  activeSyncPromise = current;
+  return current.then((result) => {
+    if (result.ok) lastSyncCompletedAt = Date.now();
+    if (activeSyncPromise === current) activeSyncPromise = null;
+    return result;
+  });
 }
 
 module.exports = {
@@ -167,8 +173,6 @@ module.exports = {
   CLOUD_COLLECTION,
   OPENID_PLACEHOLDER,
   initializeCloud,
-  getCloudSyncPreference,
-  setCloudSyncEnabled,
   getSyncState,
   subscribeSyncState,
   requestCloudSync

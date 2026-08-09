@@ -79,7 +79,7 @@
 
     const sourceSettings = input.settings && typeof input.settings === 'object' ? input.settings : {};
     const settings = { ...fallbackSettings };
-    for (const key of ['alwaysOnTop', 'launchAtLogin', 'compactMode', 'cloudSyncEnabled']) {
+    for (const key of ['alwaysOnTop', 'launchAtLogin', 'compactMode']) {
       if (typeof sourceSettings[key] === 'boolean') settings[key] = sourceSettings[key];
     }
     return { version: 2, tasks, deletedTasks, settings };

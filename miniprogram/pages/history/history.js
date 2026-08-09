@@ -15,6 +15,7 @@ Page({
   onShow() {
     this.store = loadStore();
     this.render();
+    if (this.getTabBar) this.getTabBar().setData({ selected: 1 });
     requestCloudSync().then(() => {
       this.store = loadStore();
       this.render();

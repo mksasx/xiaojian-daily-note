@@ -20,6 +20,10 @@ test('WeChat Mini Program project exposes the three core tabs', () => {
     'pages/settings/settings'
   ]);
   assert.equal(appConfig.tabBar.list.length, 3);
+  assert.equal(appConfig.tabBar.custom, true);
+  for (const extension of ['js', 'json', 'wxml', 'wxss']) {
+    assert.equal(fs.existsSync(path.join(miniRoot, 'custom-tab-bar', `index.${extension}`)), true);
+  }
 
   for (const page of ['today', 'history', 'settings']) {
     for (const extension of ['js', 'json', 'wxml', 'wxss']) {
@@ -39,7 +43,7 @@ test('Mini Program task utilities stay backup-compatible with desktop', () => {
       createdAt: '2026-08-09T02:00:00.000Z', completedAt: '2026-08-09T03:00:00.000Z', updatedAt: '2026-08-09T03:00:00.000Z'
     }
   ];
-  const backup = { version: 2, tasks, deletedTasks: [], settings: { cloudSyncEnabled: true } };
+  const backup = { version: 2, tasks, deletedTasks: [], settings: {} };
 
   assert.deepEqual(miniprogramUtils.tasksForDate(tasks, '2026-08-09'), desktopUtils.tasksForDate(tasks, '2026-08-09'));
   assert.deepEqual(miniprogramUtils.progressForDate(tasks, '2026-08-09'), desktopUtils.progressForDate(tasks, '2026-08-09'));
@@ -49,7 +53,7 @@ test('Mini Program task utilities stay backup-compatible with desktop', () => {
   assert.deepEqual(miniprogramUtils.mergeStores(backup, backup, {}), desktopUtils.mergeStores(backup, backup, {}));
 });
 
-test('Mini Program stays local-first while offering OpenID cloud sync and manual backup', () => {
+test('Mini Program stays local-first while automatically syncing by OpenID and retaining manual backup', () => {
   const sourceFiles = [
     path.join(miniRoot, 'app.js'),
     path.join(miniRoot, 'utils', 'store.js'),
@@ -62,7 +66,9 @@ test('Mini Program stays local-first while offering OpenID cloud sync and manual
   assert.match(source, /xiaojian-note-d6g8woyu3eddba850/);
   assert.match(source, /daily_note_users/);
   assert.match(source, /_openid:\s*OPENID_PLACEHOLDER/);
-  assert.match(source, /cloudSyncEnabled/);
+  assert.match(source, /onNetworkStatusChange/);
+  assert.match(source, /onShow\(\)[\s\S]*requestCloudSync/);
+  assert.doesNotMatch(source, /cloudSyncEnabled|setCloudSyncEnabled|getCloudSyncPreference/);
   assert.doesNotMatch(source, /wx\.request/);
   assert.match(source, /wx\.getStorageSync/);
   assert.match(source, /wx\.setStorageSync/);
@@ -145,7 +151,6 @@ test('Cloud sync merges remote and local tasks before updating the current OpenI
   });
 
   const cloudSync = require(cloudModulePath);
-  cloudSync.setCloudSyncEnabled(true);
   const result = await cloudSync.requestCloudSync();
 
   assert.equal(result.ok, true);
@@ -166,4 +171,18 @@ test('every WXML event handler is implemented by its page', () => {
       assert.match(script, new RegExp(`\\b${handler}\\s*\\(`), `${page}.${handler} is missing`);
     }
   }
+});
+
+test('Mini Program task controls keep fixed sizes and the settings page has no manual sync controls', () => {
+  const todayStyles = fs.readFileSync(path.join(miniRoot, 'pages', 'today', 'today.wxss'), 'utf8');
+  const settingsMarkup = fs.readFileSync(path.join(miniRoot, 'pages', 'settings', 'settings.wxml'), 'utf8');
+  const customTabMarkup = fs.readFileSync(path.join(miniRoot, 'custom-tab-bar', 'index.wxml'), 'utf8');
+  const customTabScript = fs.readFileSync(path.join(miniRoot, 'custom-tab-bar', 'index.js'), 'utf8');
+
+  assert.match(todayStyles, /\.task-check\s*\{[\s\S]*flex:\s*0 0 40rpx/);
+  assert.match(todayStyles, /\.task-delete\s*\{[\s\S]*flex:\s*0 0 52rpx/);
+  assert.doesNotMatch(settingsMarkup, /<switch|立即同步/);
+  assert.match(settingsMarkup, /微信自动同步/);
+  assert.match(customTabMarkup, /bindtap="onSwitchTab"/);
+  assert.match(customTabScript, /onSwitchTab\s*\(/);
 });

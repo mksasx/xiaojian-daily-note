@@ -1,5 +1,5 @@
 .history-page {
-  padding-top: 42rpx;
+  padding-top: 16rpx;
 }
 
 .history-header {
@@ -10,7 +10,7 @@
 
 .eyebrow {
   color: #3c765d;
-  font-size: 24rpx;
+  font-size: 23rpx;
   font-weight: 650;
   letter-spacing: 0.15em;
 }
@@ -18,8 +18,8 @@
 .page-title {
   margin-top: 10rpx;
   font-family: Georgia, "Songti SC", serif;
-  font-size: 64rpx;
-  font-weight: 700;
+  font-size: 58rpx;
+  font-weight: 650;
 }
 
 .summary {
@@ -35,21 +35,22 @@
 .search-box {
   display: flex;
   align-items: center;
-  height: 92rpx;
-  margin-top: 36rpx;
-  padding: 0 24rpx;
+  height: 80rpx;
+  margin-top: 24rpx;
+  padding: 0 20rpx;
 }
 
 .search-icon {
   margin-right: 14rpx;
   color: #3c765d;
-  font-size: 38rpx;
+  font-size: 32rpx;
 }
 
 .search-input {
   flex: 1;
-  height: 92rpx;
-  font-size: 28rpx;
+  min-width: 0;
+  height: 80rpx;
+  font-size: 27rpx;
 }
 
 .search-placeholder {
@@ -57,12 +58,16 @@
 }
 
 .history-list {
-  margin-top: 28rpx;
+  margin-top: 20rpx;
 }
 
 .history-group {
   overflow: hidden;
-  margin-bottom: 22rpx;
+  margin-bottom: 18rpx;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .history-date {
@@ -72,39 +77,47 @@
   box-sizing: border-box;
   width: 100%;
   margin: 0;
-  padding: 26rpx 28rpx 22rpx;
+  padding: 18rpx 4rpx 14rpx;
   background: transparent;
+  border-bottom: 1rpx solid #e4ded3;
   text-align: left;
   line-height: 1.4;
 }
 
+.history-date > view {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
 .history-date-title {
   font-family: Georgia, "Songti SC", serif;
-  font-size: 31rpx;
+  font-size: 29rpx;
   font-weight: 700;
 }
 
 .history-progress {
   margin-top: 6rpx;
   color: #8c8f89;
-  font-size: 22rpx;
+  font-size: 21rpx;
 }
 
 .history-arrow {
   color: #92958f;
-  font-size: 42rpx;
+  flex: none;
+  font-size: 38rpx;
 }
 
 .history-tasks {
-  padding: 0 28rpx 24rpx;
+  padding: 6rpx 4rpx 10rpx;
 }
 
 .history-task {
   display: flex;
   align-items: flex-start;
-  padding: 11rpx 0;
+  padding: 10rpx 0;
   color: #4d514c;
-  font-size: 27rpx;
+  font-size: 26rpx;
   line-height: 1.45;
 }
 
@@ -128,5 +141,15 @@
 }
 
 .history-empty {
-  margin-top: 80rpx;
+  margin-top: 56rpx;
+}
+
+@media (max-width: 350px) {
+  .page-title {
+    font-size: 54rpx;
+  }
+
+  .summary {
+    font-size: 21rpx;
+  }
 }

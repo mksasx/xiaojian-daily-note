@@ -6,11 +6,7 @@ const {
 } = require('../../utils/task-utils');
 const { formatDateHeading } = require('../../utils/format');
 const { loadStore, saveStore, createTaskId } = require('../../utils/store');
-const {
-  getCloudSyncPreference,
-  setCloudSyncEnabled,
-  requestCloudSync
-} = require('../../utils/cloud-sync');
+const { requestCloudSync } = require('../../utils/cloud-sync');
 
 Page({
   data: {
@@ -34,7 +30,6 @@ Page({
     this.selectedDate = localDateKey();
     this.store = loadStore();
     this.render();
-    setTimeout(() => this.maybeOfferCloudSync(), 0);
   },
 
   onShow() {
@@ -45,25 +40,8 @@ Page({
     }
     this.store = loadStore();
     this.render();
+    if (this.getTabBar) this.getTabBar().setData({ selected: 0 });
     this.refreshFromCloud();
-  },
-
-  maybeOfferCloudSync() {
-    if (this.syncChoiceModalOpen || getCloudSyncPreference() !== null) return;
-    this.syncChoiceModalOpen = true;
-    wx.showModal({
-      title: '开启微信云同步？',
-      content: '待办会保存到腾讯云，并按当前微信用户隔离。同一微信账号换手机后也能继续使用；你可以随时在设置中关闭。',
-      confirmText: '开启同步',
-      cancelText: '仅本机',
-      success: (result) => {
-        setCloudSyncEnabled(Boolean(result.confirm));
-        if (result.confirm) this.refreshFromCloud();
-      },
-      complete: () => {
-        this.syncChoiceModalOpen = false;
-      }
-    });
   },
 
   refreshFromCloud() {
@@ -99,7 +77,7 @@ Page({
   persist() {
     this.store = saveStore(this.store);
     this.render();
-    requestCloudSync().then(() => {
+    requestCloudSync({ force: true }).then(() => {
       this.store = loadStore();
       this.render();
     });
