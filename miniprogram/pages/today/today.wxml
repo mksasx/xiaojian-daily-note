@@ -46,7 +46,7 @@
   </form>
 
   <button wx:if="{{carryCount > 0}}" class="carry-banner" bindtap="onCarryTasks">
-    <text><text class="carry-count">{{carryCount}}</text> 项昨日待办还未完成</text>
+    <text class="carry-copy"><text class="carry-count">{{carryCount}}</text> 项昨日待办还未完成</text>
     <text class="carry-action">移到今天 ›</text>
   </button>
 

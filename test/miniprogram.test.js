@@ -181,6 +181,10 @@ test('Mini Program task controls keep fixed sizes and the settings page has no m
 
   assert.match(todayStyles, /\.task-check\s*\{[\s\S]*flex:\s*0 0 24px/);
   assert.match(todayStyles, /\.task-delete\s*\{[\s\S]*flex:\s*0 0 36px/);
+  assert.match(todayStyles, /\.nav-arrow\s*\{[\s\S]*margin:\s*0 4px !important/);
+  assert.match(todayStyles, /\.task-check\s*\{[\s\S]*margin:\s*0 14px 0 0 !important/);
+  assert.match(todayStyles, /\.carry-banner\s*\{[\s\S]*width:\s*100% !important/);
+  assert.match(todayStyles, /\.carry-copy,[\s\S]*white-space:\s*nowrap/);
   assert.doesNotMatch(settingsMarkup, /<switch|立即同步/);
   assert.doesNotMatch(settingsMarkup, /不读取微信号|昵称或手机号/);
   assert.match(settingsMarkup, /class="data-note[\s\S]*\{\{syncTitle\}\}/);
@@ -207,6 +211,8 @@ test('Mini Program reuses the web visual structure while reserving the WeChat sy
   assert.match(todayMarkup, /class="arrow-symbol"[\s\S]*class="task-composer-row"[\s\S]*class="delete-symbol"/);
   assert.match(todayMarkup, /assets\/empty-note\.svg/);
   assert.match(historyMarkup, /class="close-symbol"[\s\S]*class="history-summary"[\s\S]*累计完成[\s\S]*记录天数[\s\S]*class="history-day"/);
+  assert.match(fs.readFileSync(path.join(miniRoot, 'pages', 'history', 'history.wxss'), 'utf8'), /\.history-date\s*\{[\s\S]*width:\s*100% !important[\s\S]*margin:\s*0 !important/);
+  assert.match(appStyles, /\.round-button\s*\{[\s\S]*margin:\s*0 0 0 auto !important/);
   assert.match(settingsMarkup, /class="data-actions"[\s\S]*class="data-note/);
   assert.match(tabMarkup, /selectedIconPath/);
 });
