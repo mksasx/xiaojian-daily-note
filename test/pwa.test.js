@@ -44,3 +44,11 @@ test('date heading exposes a native calendar picker', () => {
   assert.match(renderer, /elements\.datePicker\.value = selectedDate/);
   assert.match(renderer, /elements\.datePicker\.addEventListener\('change'/);
 });
+
+test('primary navigation uses the corrected icon set', () => {
+  const html = fs.readFileSync(path.join(sourceRoot, 'index.html'), 'utf8');
+  for (const icon of ['icon-pin', 'icon-history', 'icon-settings']) {
+    assert.match(html, new RegExp(`class="${icon}"`));
+  }
+  assert.doesNotMatch(html, /transform="translate\(2\) scale\(\.84\)"/);
+});
