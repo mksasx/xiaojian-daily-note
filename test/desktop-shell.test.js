@@ -24,3 +24,16 @@ test('Windows package and runtime use the custom icon', () => {
   assert.equal(fs.existsSync(path.join(projectRoot, 'src', 'icons', 'icon.ico')), true);
   assert.equal(fs.existsSync(path.join(projectRoot, 'src', 'icons', 'tray-icon.png')), true);
 });
+
+test('desktop releases build Windows and universal macOS installers', () => {
+  const workflow = fs.readFileSync(path.join(projectRoot, '.github', 'workflows', 'release.yml'), 'utf8');
+  const packageConfig = JSON.parse(fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf8'));
+  const macTarget = packageConfig.build.mac.target[0];
+
+  assert.deepEqual(macTarget.arch, ['universal']);
+  assert.equal(packageConfig.build.mac.icon, 'build/icon.icns');
+  assert.match(workflow, /runs-on: windows-latest/);
+  assert.match(workflow, /runs-on: macos-latest/);
+  assert.match(workflow, /actions\/upload-artifact@v7/);
+  assert.match(workflow, /gh release upload/);
+});
