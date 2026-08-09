@@ -48,9 +48,15 @@
       <main>
         <section class="today-view" id="todayView">
           <div class="date-row">
-            <div>
+            <div class="date-heading">
               <p class="eyebrow" id="dateEyebrow">星期日</p>
-              <h1 id="dateTitle">8月9日</h1>
+              <div class="date-title-row">
+                <h1 id="dateTitle">8月9日</h1>
+                <label class="date-picker-trigger" title="选择日期">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 9 5 5 5-5"/></svg>
+                  <input type="date" id="datePicker" aria-label="选择日期" />
+                </label>
+              </div>
             </div>
             <div class="progress-ring" id="progressRing" aria-label="今日进度">
               <svg viewBox="0 0 42 42" aria-hidden="true">
@@ -155,7 +161,7 @@
             <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.8 2.8 8 7 10 4.2-2 7-5.2 7-10V6z"/><path d="m9 12 2 2 4-5"/></svg>
             <div><b>数据只在你的设备上</b><p>当前版本无需登录，也不会上传内容。云同步接口已预留。</p></div>
           </div>
-          <p class="version">小笺 1.3.1</p>
+          <p class="version">小笺 1.3.2</p>
         </section>
       </main>
 

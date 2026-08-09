@@ -2,7 +2,7 @@ const { localDateKey, dateFromKey, shiftDateKey, tasksForDate, progressForDate, 
 
 const elements = Object.fromEntries([
   'taskForm', 'taskInput', 'addTaskButton', 'taskContent', 'activeTaskList', 'completedTaskList',
-  'completedSection', 'completedCount', 'toggleCompleted', 'emptyState', 'dateEyebrow', 'dateTitle',
+  'completedSection', 'completedCount', 'toggleCompleted', 'emptyState', 'dateEyebrow', 'dateTitle', 'datePicker',
   'progressRing', 'progressText', 'ringValue', 'previousDay', 'nextDay', 'jumpToday', 'carryButton',
   'carryCount', 'historyPanel', 'settingsPanel', 'historySearch', 'historySummary', 'historyList',
   'pinButton', 'minimizeButton', 'closeButton', 'alwaysOnTopSetting', 'launchAtLoginSetting',
@@ -101,6 +101,7 @@ function renderDate() {
   const today = localDateKey();
   elements.dateEyebrow.textContent = weekdayFormatter.format(date);
   elements.dateTitle.textContent = fullDateFormatter.format(date);
+  elements.datePicker.value = selectedDate;
   elements.jumpToday.classList.toggle('is-today', selectedDate === today);
   elements.jumpToday.textContent = selectedDate === today ? '今天' : '回到今天';
   elements.taskInput.placeholder = selectedDate === today ? '写下今天想完成的事…' : '为这一天补记一件事…';
@@ -324,6 +325,11 @@ elements.taskInput.addEventListener('input', () => elements.taskForm.classList.t
 elements.previousDay.addEventListener('click', () => { selectedDate = shiftDateKey(selectedDate, -1); renderToday(); });
 elements.nextDay.addEventListener('click', () => { selectedDate = shiftDateKey(selectedDate, 1); renderToday(); });
 elements.jumpToday.addEventListener('click', () => { selectedDate = localDateKey(); renderToday(); });
+elements.datePicker.addEventListener('change', () => {
+  if (!elements.datePicker.value) return;
+  selectedDate = elements.datePicker.value;
+  renderToday();
+});
 elements.carryButton.addEventListener('click', carryTasks);
 elements.toggleCompleted.addEventListener('click', () => {
   elements.completedSection.classList.toggle('collapsed');

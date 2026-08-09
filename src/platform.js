@@ -26,7 +26,7 @@
     const fileName = `小笺备份-${date}.json`;
     const safeStore = window.TaskUtils.normalizeBackup(data, {});
     const file = new File([
-      JSON.stringify({ ...safeStore, exportedAt: new Date().toISOString(), appVersion: '1.3.1' }, null, 2)
+      JSON.stringify({ ...safeStore, exportedAt: new Date().toISOString(), appVersion: '1.3.2' }, null, 2)
     ], fileName, { type: 'application/json' });
 
     if (navigator.share && navigator.canShare?.({ files: [file] })) {

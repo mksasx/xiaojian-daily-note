@@ -36,3 +36,11 @@ test('today view does not steal focus unless the new-task shortcut is used', () 
   assert.doesNotMatch(renderer, /renderToday\(\);\s*elements\.taskInput\.focus\(\)/);
   assert.match(renderer, /event\.preventDefault\(\); openView\('today'\); elements\.taskInput\.focus\(\)/);
 });
+
+test('date heading exposes a native calendar picker', () => {
+  const html = fs.readFileSync(path.join(sourceRoot, 'index.html'), 'utf8');
+  const renderer = fs.readFileSync(path.join(sourceRoot, 'renderer.js'), 'utf8');
+  assert.match(html, /<input type="date" id="datePicker" aria-label="选择日期" \/>/);
+  assert.match(renderer, /elements\.datePicker\.value = selectedDate/);
+  assert.match(renderer, /elements\.datePicker\.addEventListener\('change'/);
+});
