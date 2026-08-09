@@ -1,6 +1,7 @@
 const { groupedHistory, progressForDate, tasksForDate } = require('../../utils/task-utils');
 const { formatDateHeading } = require('../../utils/format');
 const { loadStore } = require('../../utils/store');
+const { requestCloudSync } = require('../../utils/cloud-sync');
 
 Page({
   data: {
@@ -14,6 +15,10 @@ Page({
   onShow() {
     this.store = loadStore();
     this.render();
+    requestCloudSync().then(() => {
+      this.store = loadStore();
+      this.render();
+    });
   },
 
   onSearchInput(event) {

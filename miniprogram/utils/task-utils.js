@@ -77,7 +77,7 @@ function normalizeBackup(input, fallbackSettings = {}) {
 
   const sourceSettings = input.settings && typeof input.settings === 'object' ? input.settings : {};
   const settings = { ...fallbackSettings };
-  for (const key of ['alwaysOnTop', 'launchAtLogin', 'compactMode']) {
+  for (const key of ['alwaysOnTop', 'launchAtLogin', 'compactMode', 'cloudSyncEnabled']) {
     if (typeof sourceSettings[key] === 'boolean') settings[key] = sourceSettings[key];
   }
   return { version: 2, tasks, deletedTasks, settings };

@@ -1,3 +1,5 @@
+const { initializeCloud } = require('./utils/cloud-sync');
+
 App({
   globalData: {
     selectedDate: ''
@@ -5,5 +7,6 @@ App({
 
   onLaunch() {
     this.globalData.selectedDate = '';
+    initializeCloud();
   }
 });

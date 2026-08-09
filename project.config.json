@@ -12,6 +12,19 @@
     "postcss": true,
     "minified": true,
     "enhance": true,
-    "showShadowRootInWxmlPanel": true
+    "showShadowRootInWxmlPanel": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "condition": false
+  },
+  "libVersion": "3.17.0",
+  "srcMiniprogramRoot": "miniprogram/",
+  "condition": {},
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
   }
 }

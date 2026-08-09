@@ -98,6 +98,7 @@
 .sync-card {
   display: flex;
   align-items: flex-start;
+  margin-top: 20rpx;
   padding: 28rpx;
 }
 
@@ -109,6 +110,35 @@
   background: #d59668;
   border-radius: 50%;
   box-shadow: 0 0 0 8rpx #f6e9df;
+}
+
+.sync-dot.synced {
+  background: #3c765d;
+  box-shadow: 0 0 0 8rpx #e2efe8;
+}
+
+.sync-dot.syncing {
+  background: #d59668;
+  animation: sync-pulse 1.4s ease-in-out infinite;
+}
+
+.sync-dot.error {
+  background: #b45d4c;
+  box-shadow: 0 0 0 8rpx #f5e2de;
+}
+
+.sync-dot.muted {
+  background: #999c96;
+  box-shadow: 0 0 0 8rpx #ecebe7;
+}
+
+@keyframes sync-pulse {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 .danger .row-title {

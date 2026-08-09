@@ -1,23 +1,137 @@
 const { localDateKey, mergeStores, normalizeBackup } = require('../../utils/task-utils');
-const { emptyStore, loadStore, saveStore } = require('../../utils/store');
+const { loadStore, saveStore } = require('../../utils/store');
+const {
+  getCloudSyncPreference,
+  setCloudSyncEnabled,
+  getSyncState,
+  subscribeSyncState,
+  requestCloudSync
+} = require('../../utils/cloud-sync');
+
+function formatSyncTime(isoTime) {
+  if (!isoTime) return '';
+  const date = new Date(isoTime);
+  const pad = (value) => String(value).padStart(2, '0');
+  return `${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function syncPresentation(state) {
+  const presentations = {
+    choice_required: {
+      title: '尚未选择同步方式',
+      copy: '开启后，待办会按当前微信用户保存到云端。',
+      tone: 'muted'
+    },
+    disabled: {
+      title: '仅本机保存',
+      copy: '关闭期间不会上传；已有云端副本会保留。',
+      tone: 'muted'
+    },
+    idle: {
+      title: '等待同步',
+      copy: '联网后会自动合并本机和云端记录。',
+      tone: 'pending'
+    },
+    syncing: {
+      title: '正在同步',
+      copy: '正在安全合并本机和云端记录…',
+      tone: 'syncing'
+    },
+    synced: {
+      title: '已同步',
+      copy: state.lastSyncedAt ? `最近同步 ${formatSyncTime(state.lastSyncedAt)}` : '本机与云端记录一致。',
+      tone: 'synced'
+    },
+    setup_required: {
+      title: '等待数据库配置',
+      copy: '请创建 daily_note_users 集合，并设为“仅创建者可读写”。',
+      tone: 'error'
+    },
+    offline: {
+      title: '当前离线',
+      copy: '待办已保存在本机，恢复联网后可以继续同步。',
+      tone: 'pending'
+    },
+    unsupported: {
+      title: '当前基础库不支持云开发',
+      copy: '请升级微信或开发者工具后再试。',
+      tone: 'error'
+    },
+    error: {
+      title: state.errorCode === 'PERMISSION_DENIED' ? '数据库权限需要调整' : '暂时无法同步',
+      copy: state.errorCode === 'PERMISSION_DENIED'
+        ? '请确认集合权限为“仅创建者可读写”。'
+        : '本机数据不受影响，稍后可以再次尝试。',
+      tone: 'error'
+    }
+  };
+  return presentations[state.status] || presentations.idle;
+}
 
 Page({
   data: {
     taskCount: 0,
     dayCount: 0,
-    appVersion: '1.0.0'
+    appVersion: '1.1.0',
+    cloudSyncEnabled: false,
+    syncTitle: '等待同步',
+    syncCopy: '联网后会自动合并本机和云端记录。',
+    syncTone: 'pending',
+    isSyncing: false,
+    clearDataTitle: '清空本机数据',
+    clearDataCopy: '删除当前小程序内的全部待办'
+  },
+
+  onLoad() {
+    this.unsubscribeSyncState = subscribeSyncState((state) => this.applySyncState(state));
   },
 
   onShow() {
     this.refreshSummary();
+    this.applySyncState(getSyncState());
+    if (getCloudSyncPreference() === true) {
+      requestCloudSync().then(() => this.refreshSummary());
+    }
+  },
+
+  onUnload() {
+    if (this.unsubscribeSyncState) this.unsubscribeSyncState();
+  },
+
+  applySyncState(state) {
+    const presentation = syncPresentation(state);
+    this.setData({
+      syncTitle: presentation.title,
+      syncCopy: presentation.copy,
+      syncTone: presentation.tone,
+      isSyncing: state.status === 'syncing'
+    });
   },
 
   refreshSummary() {
     const store = loadStore();
+    const cloudSyncEnabled = getCloudSyncPreference() === true;
     this.setData({
       taskCount: store.tasks.length,
-      dayCount: new Set(store.tasks.map((task) => task.date)).size
+      dayCount: new Set(store.tasks.map((task) => task.date)).size,
+      cloudSyncEnabled,
+      clearDataTitle: cloudSyncEnabled ? '清空本机与云端数据' : '清空本机数据',
+      clearDataCopy: cloudSyncEnabled
+        ? '删除本机与云端的全部待办，设置和备份不受影响'
+        : '删除本机待办；已有云端副本将在下次同步时合并'
     });
+  },
+
+  onCloudSyncChange(event) {
+    const enabled = Boolean(event.detail.value);
+    setCloudSyncEnabled(enabled);
+    this.refreshSummary();
+    this.applySyncState(getSyncState());
+    if (enabled) requestCloudSync().then(() => this.refreshSummary());
+  },
+
+  onSyncNow() {
+    requestCloudSync().then(() => this.refreshSummary());
   },
 
   backupPayload() {
@@ -95,6 +209,7 @@ Page({
       const merged = mergeStores(loadStore(), incoming, {});
       saveStore(merged);
       this.refreshSummary();
+      requestCloudSync().then(() => this.refreshSummary());
       wx.showToast({ title: '备份已合并', icon: 'success' });
     } catch (error) {
       console.error('Unable to import backup', error);
@@ -111,15 +226,23 @@ Page({
   },
 
   onClearData() {
+    const cloudSyncEnabled = getCloudSyncPreference() === true;
     wx.showModal({
-      title: '清空本机数据？',
+      title: cloudSyncEnabled ? '清空本机与云端？' : '清空本机数据？',
       content: '此操作无法撤销，建议先导出一份备份。',
       confirmText: '清空',
       confirmColor: '#b45d4c',
       success: (result) => {
         if (!result.confirm) return;
-        saveStore(emptyStore());
+        const store = loadStore();
+        const deletedAt = new Date().toISOString();
+        const deletionMap = new Map(store.deletedTasks.map((entry) => [entry.id, entry]));
+        store.tasks.forEach((task) => deletionMap.set(task.id, { id: task.id, deletedAt }));
+        store.tasks = [];
+        store.deletedTasks = [...deletionMap.values()];
+        saveStore(store);
         this.refreshSummary();
+        requestCloudSync().then(() => this.refreshSummary());
         wx.showToast({ title: '已清空', icon: 'success' });
       }
     });
