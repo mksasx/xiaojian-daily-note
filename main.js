@@ -45,6 +45,14 @@ function toggleWindow() {
   else showWindow();
 }
 
+function setLoginItem(enabled) {
+  const loginOptions = { openAtLogin: Boolean(enabled) };
+  if (process.platform === 'win32') loginOptions.args = ['--hidden'];
+  if (process.platform === 'darwin') loginOptions.openAsHidden = true;
+  app.setLoginItemSettings(loginOptions);
+  return app.getLoginItemSettings(process.platform === 'win32' ? { args: ['--hidden'] } : {}).openAtLogin;
+}
+
 function createTray() {
   const trayImage = nativeImage.createFromPath(trayIconPath);
   tray = new Tray(trayImage);
@@ -161,7 +169,7 @@ if (!hasSingleInstanceLock) {
   app.quit();
 } else {
   app.on('second-instance', showWindow);
-  app.whenReady().then(() => {
+  app.whenReady().then(async () => {
   app.setAppUserModelId('com.dailynote.desktop');
   if (process.platform === 'darwin') app.dock.hide();
   ipcMain.handle('store:load', loadStore);
@@ -188,12 +196,10 @@ if (!hasSingleInstanceLock) {
     mainWindow.setSize(width, compact ? 520 : 680, true);
   });
   ipcMain.handle('app:set-login-item', (_event, enabled) => {
-    const loginOptions = { openAtLogin: Boolean(enabled) };
-    if (process.platform === 'win32') loginOptions.args = ['--hidden'];
-    if (process.platform === 'darwin') loginOptions.openAsHidden = true;
-    app.setLoginItemSettings(loginOptions);
-    return app.getLoginItemSettings(process.platform === 'win32' ? { args: ['--hidden'] } : {}).openAtLogin;
+    return setLoginItem(enabled);
   });
+  const initialStore = await loadStore();
+  if (initialStore.settings.launchAtLogin) setLoginItem(true);
   createTray();
   createWindow(!launchHidden);
     app.on('activate', showWindow);

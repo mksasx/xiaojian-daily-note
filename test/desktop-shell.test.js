@@ -13,6 +13,7 @@ test('desktop shell runs as a tray utility', () => {
   assert.match(main, /ipcMain\.handle\('window:minimize', hideWindow\)/);
   assert.match(main, /ipcMain\.handle\('window:close', hideWindow\)/);
   assert.match(main, /args = \['--hidden'\]/);
+  assert.match(main, /if \(initialStore\.settings\.launchAtLogin\) setLoginItem\(true\)/);
 });
 
 test('Windows package and runtime use the custom icon', () => {
