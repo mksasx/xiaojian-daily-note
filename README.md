@@ -4,6 +4,12 @@
 
 在线版：[mksasx.github.io/xiaojian-daily-note](https://mksasx.github.io/xiaojian-daily-note/)
 
+## 下载安装
+
+Windows 安装程序和同时支持 Apple 芯片、Intel Mac 的通用 `.dmg` 会发布在 [GitHub Releases](https://github.com/mksasx/xiaojian-daily-note/releases)。
+
+macOS 安装包目前未使用 Apple Developer 证书签名。首次打开时如果被系统拦截，请在 Finder 的“应用程序”中按住 Control 点击“小笺”，选择“打开”，再确认一次。
+
 ## 功能
 
 - 每日独立待办，点击切换完成状态
@@ -48,6 +54,8 @@ npm run dist
 ```
 
 Windows 安装包需在 Windows 上构建，macOS DMG 需在 macOS 上构建。应用数据存放在 Electron 的 `userData` 目录中。
+
+推送 `v*.*.*` 格式的版本标签后，GitHub Actions 会自动构建 Windows x64 安装程序和 macOS 通用 DMG，并上传到对应的 GitHub Release。
 
 ## 数据与同步
 

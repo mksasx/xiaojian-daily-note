@@ -18,8 +18,8 @@
     "dist": "electron-builder"
   },
   "devDependencies": {
-    "electron": "^43.3.0",
-    "electron-builder": "^26.15.3"
+    "electron": "43.3.0",
+    "electron-builder": "26.15.5"
   },
   "build": {
     "appId": "com.dailynote.desktop",
@@ -39,7 +39,16 @@
       "target": "nsis"
     },
     "mac": {
-      "target": "dmg",
+      "icon": "build/icon.icns",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-${version}-mac-${arch}.${ext}",
       "category": "public.app-category.productivity"
     }
   }

@@ -55,6 +55,7 @@ function setLoginItem(enabled) {
 
 function createTray() {
   const trayImage = nativeImage.createFromPath(trayIconPath);
+  if (process.platform === 'darwin') trayImage.setTemplateImage(true);
   tray = new Tray(trayImage);
   tray.setToolTip('小笺 · 每日待办');
   tray.setContextMenu(Menu.buildFromTemplate([
