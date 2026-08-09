@@ -190,6 +190,7 @@ test('Mini Program task controls keep fixed sizes and the settings page has no m
   assert.match(settingsMarkup, /class="data-note[\s\S]*\{\{syncTitle\}\}/);
   assert.match(fs.readFileSync(path.join(miniRoot, 'pages', 'today', 'today.wxml'), 'utf8'), /class="task-composer-row"/);
   assert.match(customTabMarkup, /bindtap="onSwitchTab"/);
+  assert.match(customTabMarkup, /class="tab-inner"/);
   assert.match(customTabScript, /onSwitchTab\s*\(/);
 });
 
@@ -206,6 +207,7 @@ test('Mini Program reuses the web visual structure while reserving the WeChat sy
   assert.equal(appConfig.usingComponents['app-header'], '/components/app-header/index');
   assert.match(appStyles, /#f7f5ef/);
   assert.match(appStyles, /font-size:\s*15px/);
+  assert.match(appStyles, /@media\s*\(min-width:\s*768px\)[\s\S]*\.page-shell\s*\{[\s\S]*max-width:\s*720px/);
   assert.match(webStyles, /font-size:\s*15px/);
   assert.match(todayMarkup, /<app-header\s*\/>[\s\S]*class="date-row"[\s\S]*class="task-content"/);
   assert.match(todayMarkup, /class="arrow-symbol"[\s\S]*class="task-composer-row"[\s\S]*class="delete-symbol"/);
@@ -215,4 +217,5 @@ test('Mini Program reuses the web visual structure while reserving the WeChat sy
   assert.match(appStyles, /\.round-button\s*\{[\s\S]*margin:\s*0 0 0 auto !important/);
   assert.match(settingsMarkup, /class="data-actions"[\s\S]*class="data-note/);
   assert.match(tabMarkup, /selectedIconPath/);
+  assert.match(fs.readFileSync(path.join(miniRoot, 'custom-tab-bar', 'index.wxss'), 'utf8'), /\.tab-inner\s*\{[\s\S]*max-width:\s*460px[\s\S]*@media\s*\(min-width:\s*768px\)[\s\S]*max-width:\s*720px/);
 });

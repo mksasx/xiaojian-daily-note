@@ -12,6 +12,15 @@
   border-top: 1px solid rgba(215, 211, 200, 0.8);
 }
 
+.tab-inner {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 460px;
+  height: 65px;
+  margin: 0 auto;
+}
+
 .tab-item {
   display: flex;
   flex: 1;
@@ -36,4 +45,10 @@
 .tab-label {
   font-size: 12px;
   line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .tab-inner {
+    max-width: 720px;
+  }
 }

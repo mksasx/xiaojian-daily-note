@@ -129,3 +129,9 @@ button::after {
     font-size: 25px;
   }
 }
+
+@media (min-width: 768px) {
+  .page-shell {
+    max-width: 720px;
+  }
+}
