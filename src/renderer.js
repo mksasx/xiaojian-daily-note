@@ -301,7 +301,6 @@ function openView(view) {
   });
   document.querySelectorAll('.nav-item').forEach((button) => button.classList.toggle('active', button.dataset.view === view));
   if (view === 'history') renderHistory();
-  if (view === 'today') elements.taskInput.focus();
 }
 
 function syncSettingsUi() {
@@ -368,7 +367,6 @@ async function initialize() {
       elements.installAppButton.classList.add('hidden');
     }
     renderToday();
-    elements.taskInput.focus();
   } catch (error) {
     console.error(error);
     showToast('应用初始化失败');

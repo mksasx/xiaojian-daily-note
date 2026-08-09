@@ -29,3 +29,10 @@ test('offline shell contains every core PWA asset', () => {
     assert.ok(worker.includes(asset), `${asset} is missing from the offline shell`);
   }
 });
+
+test('today view does not steal focus unless the new-task shortcut is used', () => {
+  const renderer = fs.readFileSync(path.join(sourceRoot, 'renderer.js'), 'utf8');
+  assert.doesNotMatch(renderer, /if \(view === 'today'\) elements\.taskInput\.focus\(\)/);
+  assert.doesNotMatch(renderer, /renderToday\(\);\s*elements\.taskInput\.focus\(\)/);
+  assert.match(renderer, /event\.preventDefault\(\); openView\('today'\); elements\.taskInput\.focus\(\)/);
+});
