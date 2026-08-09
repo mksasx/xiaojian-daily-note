@@ -1,0 +1,10 @@
+node_modules/
+.npm-cache/
+.electron-cache/
+.smoke/
+release/
+release-1.1/
+release-1.2/
+dist/
+.site-build/
+*.log

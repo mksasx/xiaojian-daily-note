@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#3c765d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="小笺" />
+    <meta name="description" content="小笺是一款离线优先、本地存储、支持手动多设备备份的每日待办工具。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="小笺 · 每日待办" />
+    <meta property="og:description" content="今天，从一件小事开始。离线、本地、多设备备份。" />
+    <meta property="og:image" content="og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="小笺 · 每日待办" />
+    <meta name="twitter:description" content="今天，从一件小事开始。离线、本地、多设备备份。" />
+    <meta name="twitter:image" content="og.png" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:" />
+    <title>小笺</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="icons/icon-192.png" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell" id="appShell">
+      <header class="titlebar">
+        <div class="brand" aria-label="小笺">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M7.5 3.5h10.8l4.2 4.2v16.8h-15z"/><path class="fold" d="M18.3 3.5v4.2h4.2"/><path class="line" d="M11 12h8M11 16h6M11 20h4"/></svg>
+          <span>小笺</span>
+        </div>
+        <div class="window-actions">
+          <button class="icon-button pin-button" id="pinButton" aria-label="窗口置顶" title="窗口置顶">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 4 8 8M14.8 3.8l5.4 5.4-3.3 1.1-5.2 5.2-3.2-.2-4.2 4.2M8.5 6.5l-1 3 7 7 3-1"/></svg>
+          </button>
+          <button class="icon-button" id="minimizeButton" aria-label="最小化" title="最小化">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 12h12"/></svg>
+          </button>
+          <button class="icon-button close-button" id="closeButton" aria-label="关闭" title="关闭">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main>
+        <section class="today-view" id="todayView">
+          <div class="date-row">
+            <div>
+              <p class="eyebrow" id="dateEyebrow">星期日</p>
+              <h1 id="dateTitle">8月9日</h1>
+            </div>
+            <div class="progress-ring" id="progressRing" aria-label="今日进度">
+              <svg viewBox="0 0 42 42" aria-hidden="true">
+                <circle class="ring-track" cx="21" cy="21" r="17"/>
+                <circle class="ring-value" id="ringValue" cx="21" cy="21" r="17"/>
+              </svg>
+              <span id="progressText">0%</span>
+            </div>
+          </div>
+
+          <div class="date-nav" aria-label="日期导航">
+            <button class="nav-arrow" id="previousDay" aria-label="前一天">
+              <svg viewBox="0 0 24 24"><path d="m14 7-5 5 5 5"/></svg>
+            </button>
+            <button class="today-pill" id="jumpToday">今天</button>
+            <button class="nav-arrow" id="nextDay" aria-label="后一天">
+              <svg viewBox="0 0 24 24"><path d="m10 7 5 5-5 5"/></svg>
+            </button>
+          </div>
+
+          <form class="task-composer" id="taskForm">
+            <span class="composer-plus">+</span>
+            <input id="taskInput" maxlength="120" autocomplete="off" placeholder="写下今天想完成的事…" aria-label="新待办" />
+            <button type="submit" id="addTaskButton">添加</button>
+          </form>
+
+          <button class="carry-banner hidden" id="carryButton">
+            <span><b id="carryCount">0</b> 项昨日待办还未完成</span>
+            <span>移到今天 <svg viewBox="0 0 18 18"><path d="m7 5 4 4-4 4"/></svg></span>
+          </button>
+
+          <div class="task-content" id="taskContent">
+            <div class="empty-state" id="emptyState">
+              <div class="empty-art" aria-hidden="true">
+                <svg viewBox="0 0 96 78"><path class="paper-back" d="M18 16h54v48H18z"/><path class="paper" d="M25 9h54v48H25z"/><path class="check" d="m39 33 8 8 17-19"/><circle cx="71" cy="64" r="5"/><path class="spark" d="M13 37H6m11-19-4-5m65 5 4-5"/></svg>
+              </div>
+              <h2>今天，从一件小事开始</h2>
+              <p>写下来，然后轻轻划掉它。</p>
+            </div>
+            <ul class="task-list" id="activeTaskList" aria-label="未完成待办"></ul>
+            <section class="completed-section hidden" id="completedSection">
+              <button class="section-heading" id="toggleCompleted" aria-expanded="true">
+                <span>已完成 · <b id="completedCount">0</b></span>
+                <svg viewBox="0 0 20 20"><path d="m6 8 4 4 4-4"/></svg>
+              </button>
+              <ul class="task-list completed-list" id="completedTaskList" aria-label="已完成待办"></ul>
+            </section>
+          </div>
+        </section>
+
+        <section class="panel history-panel" id="historyPanel" aria-hidden="true">
+          <div class="panel-heading">
+            <div><p class="eyebrow">过往足迹</p><h1>历史</h1></div>
+            <button class="round-button" data-close-panel="history" aria-label="关闭历史"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+          </div>
+          <label class="search-box">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+            <input id="historySearch" placeholder="搜索做过的事" />
+          </label>
+          <div class="history-summary" id="historySummary"></div>
+          <div class="history-list" id="historyList"></div>
+        </section>
+
+        <section class="panel settings-panel" id="settingsPanel" aria-hidden="true">
+          <div class="panel-heading">
+            <div><p class="eyebrow">简单一点</p><h1>设置</h1></div>
+            <button class="round-button" data-close-panel="settings" aria-label="关闭设置"><svg viewBox="0 0 24 24"><path d="m7 7 10 10M17 7 7 17"/></svg></button>
+          </div>
+          <div class="settings-card">
+            <label class="setting-row desktop-only">
+              <span><b>窗口置顶</b><small>让小笺停留在其他窗口上方</small></span>
+              <input type="checkbox" id="alwaysOnTopSetting"/><i></i>
+            </label>
+            <label class="setting-row desktop-only">
+              <span><b>开机启动</b><small>登录系统后自动打开小笺</small></span>
+              <input type="checkbox" id="launchAtLoginSetting"/><i></i>
+            </label>
+            <label class="setting-row desktop-only">
+              <span><b>紧凑窗口</b><small>减少窗口高度，适合小屏幕</small></span>
+              <input type="checkbox" id="compactModeSetting"/><i></i>
+            </label>
+          </div>
+          <div class="data-actions">
+            <button class="data-action" id="exportDataButton">
+              <svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5"/></svg>
+              <span><b>导出备份</b><small>保存为 JSON 文件</small></span>
+            </button>
+            <button class="data-action" id="importDataButton">
+              <svg viewBox="0 0 24 24"><path d="M12 16V4m-4 4 4-4 4 4M5 14v6h14v-6"/></svg>
+              <span><b>导入并合并</b><small>保留两边的最新记录</small></span>
+            </button>
+            <button class="data-action wide desktop-only" id="showDataFolderButton">
+              <svg viewBox="0 0 24 24"><path d="M3 7h7l2 2h9v10H3z"/><path d="M3 7V5h7l2 2"/></svg>
+              <span><b>打开数据目录</b><small>查看本机原始数据文件</small></span>
+            </button>
+            <button class="data-action wide web-only" id="installAppButton">
+              <svg viewBox="0 0 24 24"><path d="M12 3v11m-4-4 4 4 4-4M5 17v3h14v-3"/></svg>
+              <span><b>安装到手机桌面</b><small>安装后可以全屏、离线使用</small></span>
+            </button>
+          </div>
+          <div class="data-note">
+            <svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.8 2.8 8 7 10 4.2-2 7-5.2 7-10V6z"/><path d="m9 12 2 2 4-5"/></svg>
+            <div><b>数据只在你的设备上</b><p>当前版本无需登录，也不会上传内容。云同步接口已预留。</p></div>
+          </div>
+          <p class="version">小笺 1.3.0</p>
+        </section>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-view="today"><svg viewBox="0 0 24 24"><path d="M4 9.5 12 3l8 6.5V21H4z"/><path d="M9 21v-7h6v7"/></svg><span>今日</span></button>
+        <button class="nav-item" data-view="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2M4.8 5.8 3 4"/></svg><span>历史</span></button>
+        <button class="nav-item" data-view="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 13.5v-3l-2.2-.7-.7-1.7 1-2-2.2-2.2-2 1-1.7-.7L10.5 2h-3l-.7 2.2-1.7.7-2-1L.9 6.1l1 2-.7 1.7-2.2.7v3l2.2.7.7 1.7-1 2 2.2 2.2 2-1 1.7.7.7 2.2h3l.7-2.2 1.7-.7 2 1 2.2-2.2-1-2 .7-1.7z" transform="translate(2) scale(.84)"/></svg><span>设置</span></button>
+      </nav>
+      <div class="toast" id="toast" role="status"><span></span><button type="button"></button></div>
+    </div>
+    <script src="task-utils.js"></script>
+    <script src="platform.js"></script>
+    <script src="renderer.js"></script>
+  </body>
+</html>
