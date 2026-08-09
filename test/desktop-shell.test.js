@@ -32,6 +32,8 @@ test('desktop releases build Windows and universal macOS installers', () => {
 
   assert.deepEqual(macTarget.arch, ['universal']);
   assert.equal(packageConfig.build.mac.icon, 'build/icon.icns');
+  assert.equal(packageConfig.build.mac.artifactName, 'Xiaojian-${version}-mac-${arch}.${ext}');
+  assert.equal(packageConfig.build.win.artifactName, 'Xiaojian-Setup-${version}-windows-${arch}.${ext}');
   assert.match(workflow, /runs-on: windows-latest/);
   assert.match(workflow, /runs-on: macos-latest/);
   assert.match(workflow, /actions\/upload-artifact@v7/);

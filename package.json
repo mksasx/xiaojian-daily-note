@@ -1,6 +1,6 @@
 {
   "name": "daily-note",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A calm, cross-platform desktop daily todo note.",
   "main": "main.js",
   "author": "Daily Note",
@@ -36,7 +36,8 @@
     },
     "win": {
       "icon": "src/icons/icon.ico",
-      "target": "nsis"
+      "target": "nsis",
+      "artifactName": "Xiaojian-Setup-${version}-windows-${arch}.${ext}"
     },
     "mac": {
       "icon": "build/icon.icns",
@@ -48,7 +49,7 @@
           ]
         }
       ],
-      "artifactName": "${productName}-${version}-mac-${arch}.${ext}",
+      "artifactName": "Xiaojian-${version}-mac-${arch}.${ext}",
       "category": "public.app-category.productivity"
     }
   }
