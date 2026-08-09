@@ -13,7 +13,7 @@ test('WeChat Mini Program project exposes the three core tabs', () => {
   const appConfig = JSON.parse(fs.readFileSync(path.join(miniRoot, 'app.json'), 'utf8'));
 
   assert.equal(projectConfig.miniprogramRoot, 'miniprogram/');
-  assert.equal(projectConfig.appid, 'touristappid');
+  assert.equal(projectConfig.appid, 'wxa3b2d716724f4f64');
   assert.deepEqual(appConfig.pages, [
     'pages/today/today',
     'pages/history/history',
